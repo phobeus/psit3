@@ -1,6 +1,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.app.movietap.NavigationActivity">
+    <item android:id="@+id/action_settings1" android:title="gemerkt"
+        android:icon="@drawable/ic_action_collection"
+        android:orderInCategory="100" android:showAsAction="always" />
+    <item android:id="@+id/action_settings2" android:title="wünsche"
+        android:icon="@drawable/ic_gift"
+        android:orderInCategory="100" android:showAsAction="always" />
+    <item android:id="@+id/action_settings3" android:title="Filter"
+        android:orderInCategory="100" android:showAsAction="collapseActionView|ifRoom" />
+    <item android:id="@+id/search"
+        android:title="suche"
+        android:icon="@drawable/ic_action_search"
+        android:showAsAction="always"
+        android:actionViewClass="android.widget.SearchView" />
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" android:showAsAction="never" />
 </menu>

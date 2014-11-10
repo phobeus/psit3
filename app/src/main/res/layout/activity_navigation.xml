@@ -5,11 +5,16 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.app.movietap.NavigationActivity"
-    android:id="@+id/navigationActivity">
+    android:id="@+id/navigationActivity"
+    android:background="@color/gray_overlay">
 
-    <TextView android:text="Navigation" android:layout_width="wrap_content"
+    <TextView android:text="Navigation" android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textNavigation" />
+        android:id="@+id/textNavigation"
+        android:textColor="@color/green_overlay"
+        android:layout_alignRight="@+id/buttonHome"
+        android:layout_alignEnd="@+id/buttonHome"
+        android:textSize="40dp" />
 
     <Button
         android:layout_width="match_parent"
@@ -18,7 +23,8 @@
         android:id="@+id/buttonHome"
         android:layout_below="@+id/textNavigation"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="@color/green_overlay" />
 
     <Button
         android:layout_width="match_parent"
@@ -27,7 +33,8 @@
         android:id="@+id/buttonRegistration"
         android:layout_below="@+id/buttonHome"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="@color/green_overlay" />
 
     <Button
         android:layout_width="match_parent"
@@ -36,6 +43,7 @@
         android:id="@+id/buttonMovies"
         android:layout_below="@+id/buttonRegistration"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="@color/green_overlay" />
 
 </RelativeLayout>

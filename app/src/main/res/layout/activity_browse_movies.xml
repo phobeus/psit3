@@ -5,17 +5,19 @@
     android:layout_height="match_parent"
     android:paddingLeft="8dp"
     android:paddingRight="8dp"
-    tools:context="com.app.movietap.BrowseMoviesActivity">
+    tools:context="com.app.movietap.BrowseMoviesActivity"
+    android:background="@color/green_overlay"
+    android:weightSum="1">
 
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="504dp"
         android:id="@android:id/list"
         android:layout_below="@+id/textView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="22dp"
-        android:layout_weight="1"
-        tools:listitem="@android:layout/simple_expandable_list_item_2" />
+        tools:listitem="@android:layout/simple_expandable_list_item_2"
+        android:layout_weight="0.22" />
 
 </LinearLayout>

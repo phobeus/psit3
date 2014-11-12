@@ -18,7 +18,7 @@ import com.app.movietap.util.SystemUiHider;
  *
  * @see SystemUiHider
  */
-public class HomeActivity extends Activity
+public class HomeActivity extends BaseActivity
 {
   /**
    * Whether or not the system UI should be auto-hidden after

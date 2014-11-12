@@ -1,6 +1,8 @@
 package com.app.movietap;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,9 +12,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.parse.ParseObject;
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
-
+// Should not extend BaseActifity, as the
+// Navigation would be visible then
 public class RegisterActivity extends Activity {
 
     protected EditText nickNameText;
@@ -37,47 +42,21 @@ public class RegisterActivity extends Activity {
             public void onClick(View view) {
 
                 //Get the entered Form Data from Registration
-                String username = nickNameText.getText().toString().trim();
+                String username = nickNameText.getText().toString().trim().toLowerCase();
                 String password = passwordText.getText().toString();
                 String email = emailText.getText().toString().trim();
 
-                //parse.com test
-                ParseObject testObject = new ParseObject("User");
-                testObject.put("name", username);
-                testObject.put("email", email);
-                testObject.put("password", password);
-                testObject.saveInBackground();
-                /*-->> callback to check if parse succeed
-                * new SaveCallback() {
-                    public void done(ParseException e) {
-                        if (e == null) {
-                            //myObjectSavedSuccessfully();
-                            Log.d("MovieTap_savingParse", "Success");
-                        } else {
-                            //myObjectSaveDidNotSucceed();
-                            Log.d("MovieTap_savingParse", e.getMessage());
-                        }
-                    }
-                }
-                * */
-
-                //toast -> messagon on android device
-                Toast.makeText(RegisterActivity.this, "Hello " + username + "!", Toast.LENGTH_LONG).show();
-
-
-                //if successful go to homepage
-                Intent takeUserhome = new Intent(RegisterActivity.this, HomeActivity.class);
-                startActivity(takeUserhome);
+                signUp(username, password, email);
             }
         });
 
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.register, menu);
+        getMenuInflater().inflate(R.menu.menu_login, menu);
         return true;
     }
 
@@ -91,5 +70,44 @@ public class RegisterActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void signUp(String username, String password, String email) {
+        ParseUser newUser = new ParseUser();
+        newUser.setUsername(username);
+        newUser.setPassword(password);
+        newUser.setEmail(email);
+
+        newUser.signUpInBackground(new SignUpCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    Toast.makeText(RegisterActivity.this, "erfolgreich registriert", Toast.LENGTH_LONG).show();
+
+                    //redirect user to homeActivity
+                    Intent takeUserHome = new Intent(RegisterActivity.this, HomeActivity.class);
+                    startActivity(takeUserHome);
+                } else {
+                    Toast.makeText(RegisterActivity.this, "Registrierung fehlgeschlagen", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+    }
+
+    //NOT WORKING FOR SOME REASON --> USE TOASTS INSTEAD!!
+    protected void showError(String message, Exception e){
+        //login was not secussfull
+        AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+        builder.setMessage(e.getMessage());
+        builder.setTitle(message);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //colse the alert dialog
+                dialogInterface.dismiss();
+            }
+        });
     }
 }

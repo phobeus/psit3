@@ -6,7 +6,6 @@
     android:paddingLeft="8dp"
     android:paddingRight="8dp"
     tools:context="com.app.movietap.BrowseMoviesActivity"
-    android:background="@color/green_overlay"
     android:weightSum="1">
 
     <ListView

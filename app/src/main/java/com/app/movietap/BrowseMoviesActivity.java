@@ -1,7 +1,9 @@
 package com.app.movietap;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -49,23 +51,65 @@ public class BrowseMoviesActivity extends ListActivity
   public boolean onCreateOptionsMenu(Menu menu)
   {
     // Inflate the menu; this adds items to the action bar if it is present.
-    getMenuInflater().inflate(R.menu.browse_movies, menu);
+    getMenuInflater().inflate(R.menu.menu_navigation, menu);
     return true;
   }
 
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item)
-  {
-    // Handle action bar item clicks here. The action bar will
-    // automatically handle clicks on the Home/Up button, so long
-    // as you specify a parent activity in AndroidManifest.xml.
-    int id = item.getItemId();
-    if (id == R.id.action_settings)
-    {
-      return true;
+
+    /**
+     * react to actionbar events by forwarding user to desired activity.
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        if (id == R.id.action_collection) {
+            Intent intent = createActivity("BrowseMoviesActivity");
+            startActivity(intent);
+        } else if (id == R.id.action_wish) {
+            Intent intent = createActivity("RegisterActivity");
+            startActivity(intent);
+        } else if (id == R.id.action_filter) {
+            Intent intent = createActivity("HomeActivity");
+            startActivity(intent);
+        } else if (id == R.id.action_search) {
+            /*get search query*/
+            Intent intent = createActivity("NavigationActivity");
+            startActivity(intent);
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+
+        return true;
+
     }
-    return super.onOptionsItemSelected(item);
-  }
+
+    /**
+     * create a new intent and returns it. checks if activity is already
+     * running.
+     *
+     * @param classNameToActivate
+     * class name of activity
+     * @return new Intent
+     */
+    protected Intent createActivity(String classNameToActivate) {
+        try {
+            Class<?> activityClass = Class.forName("com.app.movietap."
+                    + classNameToActivate);
+            Intent intent = new Intent(getApplicationContext(), activityClass);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            // startActivity(intent);
+            return intent;
+        } catch (ClassNotFoundException ex) {
+            Log.e("movietap", "Menu error", ex);
+        }
+
+        // return main activity in case of not found activity
+        return createActivity("com.app.movietap.NavigationActivity");
+    }
 
   private ListView _list;
   private List<Movie> _movies;

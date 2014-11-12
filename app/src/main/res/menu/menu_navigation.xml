@@ -2,26 +2,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.app.movietap.NavigationActivity">
 
-    <item android:id="@+id/action_settings1"
+    <item android:id="@+id/action_collection"
         android:title="Gemerkt"
-        android:icon="@drawable/ic_action_collection"
+        android:icon="@drawable/ic_library"
         android:orderInCategory="100"
         android:showAsAction="always" />
 
-    <item android:id="@+id/action_settings2"
+    <item android:id="@+id/action_wish"
         android:title="Wünsche"
         android:icon="@drawable/ic_gift"
         android:orderInCategory="100"
         android:showAsAction="always" />
 
-    <item android:id="@+id/action_settings3"
+    <item android:id="@+id/action_filter"
         android:title="Filter"
+        android:icon="@drawable/ic_filter"
         android:orderInCategory="100"
         android:showAsAction="collapseActionView|ifRoom" />
 
-    <item android:id="@+id/search"
+    <item android:id="@+id/action_search"
         android:title="suche"
-        android:icon="@drawable/ic_action_search_mt"
+        android:icon="@drawable/ic_action_search"
         android:showAsAction="always"
         android:actionViewClass="android.widget.SearchView" />
 

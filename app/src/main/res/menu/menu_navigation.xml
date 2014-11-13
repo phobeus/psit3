@@ -18,13 +18,14 @@
         android:title="Filter"
         android:icon="@drawable/ic_filter"
         android:orderInCategory="100"
-        android:showAsAction="collapseActionView|ifRoom" />
+        android:showAsAction="always" />
+        <!-- android:showAsAction="collapseActionView|ifRoom" -->
 
     <item android:id="@+id/action_search"
         android:title="suche"
         android:icon="@drawable/ic_action_search"
         android:showAsAction="always"
-        android:actionViewClass="android.widget.SearchView" />
+        android:actionViewClass="android.widget.SearchView"/>
 
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" android:showAsAction="never" />

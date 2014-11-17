@@ -22,6 +22,7 @@ public class LoginActivity extends Activity {
     protected EditText nickNameText;
     protected EditText passwordText;
     protected Button loginButton;
+    protected Button buttonNoLogin;
     protected Button gotoRegisterButton;
 
     @Override
@@ -33,6 +34,7 @@ public class LoginActivity extends Activity {
         nickNameText = (EditText)findViewById(R.id.editTextNickLogin);
         passwordText = (EditText)findViewById(R.id.editTextPasswordLogin);
         loginButton = (Button)findViewById(R.id.buttonLoginLogin);
+      buttonNoLogin = (Button)findViewById(R.id.buttonNoLogin);
         gotoRegisterButton = (Button)findViewById(R.id.buttonGotoRegisterLogin);
 
         //listen to registration button click from xml activity view
@@ -66,6 +68,14 @@ public class LoginActivity extends Activity {
             });
             }
         });
+
+      buttonNoLogin.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+                Intent takeUserHome = new Intent(LoginActivity.this, HomeActivity.class);
+                startActivity(takeUserHome);
+         }
+      });
 
         gotoRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override

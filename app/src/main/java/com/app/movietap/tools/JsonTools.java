@@ -28,36 +28,7 @@ import java.util.List;
 
 public class JsonTools
 {
-  public static final String getJSON(String address){
-    StringBuilder builder = new StringBuilder();
-    HttpClient client = new DefaultHttpClient();
-    HttpGet httpGet = new HttpGet(address);
-    try{
-      HttpResponse response = client.execute(httpGet);
-      StatusLine statusLine = response.getStatusLine();
-      int statusCode = statusLine.getStatusCode();
-      if(statusCode == 200){
-        HttpEntity entity = response.getEntity();
-        InputStream content = entity.getContent();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(content));
-        String line;
-        while((line = reader.readLine()) != null){
-          builder.append(line);
-        }
-      } else {
-        //TODO: Error handling or return empty item
-        return null;
-        //Log.e(MainActivity.class.toString(), "Failed to get JSON object");
-      }
-    }catch(ClientProtocolException e){
-      e.printStackTrace();
-    } catch (IOException e){
-      e.printStackTrace();
-    }
-    return builder.toString();
-  }
-
-  public static final List<Movie> GetMovies(String json)
+  public static final List<Movie> getMovies(String json)
   {
     ArrayList<Movie> result = new ArrayList<Movie>();
 

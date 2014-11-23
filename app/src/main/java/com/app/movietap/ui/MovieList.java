@@ -5,21 +5,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.androidquery.AQuery;
 import com.app.movietap.R;
 import com.app.movietap.model.Movie;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class MovieList extends ArrayAdapter<String>
+public class MovieList extends ArrayAdapter<Movie>
 {
-  public MovieList(Activity context, List<Movie> movies, List<String> movieList)
+  public MovieList(Activity context, List<Movie> movies)
   {
-    super(context, R.layout.movie_row, movieList.toArray(new String[movieList.size()]));
+    super(context, R.layout.movie_row, movies);
 
     _context = context;
     _movies = movies;
@@ -34,7 +32,14 @@ public class MovieList extends ArrayAdapter<String>
     TextView txtDesc = (TextView) rowView.findViewById(R.id.description);
     Movie movie = _movies.get(position);
     txtTitle.setText(movie.GetTitle());
-    txtDesc.setText(movie.GetReleaseDate().toString());
+    if(movie.GetReleaseDate() != null)
+    {
+      txtDesc.setText(movie.GetReleaseDate().toString());
+    }
+    else if(!movie.GetOriginalTitle().equals(movie.GetTitle()))
+    {
+      txtDesc.setText(movie.GetOriginalTitle());
+    }
     _rowQuery = new AQuery(rowView);
     _rowQuery.id(R.id.img).image("http://image.tmdb.org/t/p/w185" + movie.GetPoster());
 

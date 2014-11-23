@@ -18,52 +18,52 @@ public class Movie
     _voteCount = voteCount;
   }
 
-  public int GetId()
+  public int getId()
   {
     return _id;
   }
 
-  public boolean GetIsAdult()
+  public boolean getIsAdult()
   {
     return _adult;
   }
 
-  public String GetBackdrop()
+  public String getBackdrop()
   {
     return _backdrop;
   }
 
-  public String GetTitle()
+  public String getTitle()
   {
     return _title;
   }
 
-  public double GetVoteAverage()
+  public double getVoteAverage()
   {
     return _voteAverage;
   }
 
-  public int GetVoteCount()
+  public int getVoteCount()
   {
     return _voteCount;
   }
 
-  public String GetOriginalTitle()
+  public String getOriginalTitle()
   {
     return _originalTitle;
   }
 
-  public Date GetReleaseDate()
+  public Date getReleaseDate()
   {
     return _releaseDate;
   }
 
-  public String GetPoster()
+  public String getPoster()
   {
     return _poster;
   }
 
-  public double GetPopularity()
+  public double getPopularity()
   {
     return _popularity;
   }

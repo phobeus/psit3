@@ -37,7 +37,7 @@ public class BrowseMoviesActivity extends ListActivity
   @Override
   public void onListItemClick(ListView l, View v, int position, long id)
   {
-    Toast.makeText(BrowseMoviesActivity.this, "You Clicked " + _movies.get(position).GetTitle(), Toast.LENGTH_SHORT).show();
+    Toast.makeText(BrowseMoviesActivity.this, "You Clicked " + _movies.get(position).getTitle(), Toast.LENGTH_SHORT).show();
   }
 
 

@@ -11,14 +11,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.movietap.model.Movie;
-import com.app.movietap.tools.APITools;
+import com.app.movietap.tools.ApiTools;
 import com.app.movietap.ui.MovieList;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -95,7 +93,7 @@ public class SearchActivity extends BaseActivity
     @Override
     protected List<Movie> doInBackground(String... params)
     {
-      List<Movie> result = APITools.searchMovies(params[0]);
+      List<Movie> result = ApiTools.searchMovies(params[0]);
 
       return result;
     }

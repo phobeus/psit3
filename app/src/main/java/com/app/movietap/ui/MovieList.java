@@ -31,17 +31,17 @@ public class MovieList extends ArrayAdapter<Movie>
     TextView txtTitle = (TextView) rowView.findViewById(R.id.txt);
     TextView txtDesc = (TextView) rowView.findViewById(R.id.description);
     Movie movie = _movies.get(position);
-    txtTitle.setText(movie.GetTitle());
-    if(movie.GetReleaseDate() != null)
+    txtTitle.setText(movie.getTitle());
+    if(movie.getReleaseDate() != null)
     {
-      txtDesc.setText(movie.GetReleaseDate().toString());
+      txtDesc.setText(movie.getReleaseDate().toString());
     }
-    else if(!movie.GetOriginalTitle().equals(movie.GetTitle()))
+    else if(!movie.getOriginalTitle().equals(movie.getTitle()))
     {
-      txtDesc.setText(movie.GetOriginalTitle());
+      txtDesc.setText(movie.getOriginalTitle());
     }
     _rowQuery = new AQuery(rowView);
-    _rowQuery.id(R.id.img).image("http://image.tmdb.org/t/p/w185" + movie.GetPoster());
+    _rowQuery.id(R.id.img).image("http://image.tmdb.org/t/p/w185" + movie.getPoster());
 
     return rowView;
   }

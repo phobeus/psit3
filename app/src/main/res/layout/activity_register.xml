@@ -17,8 +17,9 @@
         android:id="@+id/logoImage"
         android:src="@drawable/ic_launcher"
         android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/nickRegisterText"
-        android:layout_alignEnd="@+id/nickRegisterText" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/submitRegisterButton"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -27,9 +28,11 @@
         android:hint="Nick-Name"
         android:ems="10"
         android:id="@+id/nickRegisterText"
-        android:layout_below="@+id/logoImage"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/logoImage"
+        android:layout_toStartOf="@+id/logoImage"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -40,8 +43,8 @@
         android:id="@+id/emailRegisterText"
         android:layout_below="@+id/nickRegisterText"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_toLeftOf="@+id/logoImage"
+        android:layout_toStartOf="@+id/logoImage"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -53,8 +56,8 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/emailRegisterText"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_toLeftOf="@+id/logoImage"
+        android:layout_toStartOf="@+id/logoImage"/>
 
     <Button
         android:layout_width="match_parent"

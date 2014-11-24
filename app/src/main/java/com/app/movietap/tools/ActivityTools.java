@@ -23,7 +23,7 @@ public class ActivityTools
       activity.startActivity(intent);
     } else if (id == R.id.action_wish)
     {
-      Intent intent = createActivity("RegisterActivity", activity.getApplicationContext());
+      Intent intent = createActivity("BrowseMoviesActivity", activity.getApplicationContext());
       activity.startActivity(intent);
     } else if (id == R.id.action_search_view)
     {

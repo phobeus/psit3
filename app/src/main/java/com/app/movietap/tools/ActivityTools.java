@@ -25,15 +25,6 @@ public class ActivityTools
     {
       Intent intent = createActivity("RegisterActivity", activity.getApplicationContext());
       activity.startActivity(intent);
-    } else if (id == R.id.action_filter)
-    {
-      Intent intent = createActivity("HomeActivity", activity.getApplicationContext());
-      activity.startActivity(intent);
-    } else if (id == R.id.action_search)
-    {
-        /*get search query*/
-      Intent intent = createActivity("NavigationActivity", activity.getApplicationContext());
-      activity.startActivity(intent);
     } else if (id == R.id.action_search_view)
     {
       Intent intent = createActivity("SearchActivity", activity.getApplicationContext());

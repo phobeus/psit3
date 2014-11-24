@@ -16,7 +16,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ApiTools
+public class APITools
 {
   public static List<Movie> searchMovies(String query)
   {

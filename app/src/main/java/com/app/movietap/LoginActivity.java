@@ -34,7 +34,7 @@ public class LoginActivity extends Activity {
         nickNameText = (EditText)findViewById(R.id.editTextNickLogin);
         passwordText = (EditText)findViewById(R.id.editTextPasswordLogin);
         loginButton = (Button)findViewById(R.id.buttonLoginLogin);
-      buttonNoLogin = (Button)findViewById(R.id.buttonNoLogin);
+        buttonNoLogin = (Button)findViewById(R.id.buttonNoLogin);
         gotoRegisterButton = (Button)findViewById(R.id.buttonGotoRegisterLogin);
 
         //listen to registration button click from xml activity view

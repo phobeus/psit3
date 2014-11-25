@@ -10,13 +10,14 @@ import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class APITools
+public class ApiTools
 {
   public static List<Movie> searchMovies(String query)
   {
@@ -41,6 +42,30 @@ public class APITools
     }
 
     return new ArrayList<Movie>();
+  }
+
+  public static JSONObject getMovie(int id)
+  {
+      URIBuilder url = getBaseUriBuilder();
+      if(url == null) { return null; }
+
+      url.setPath("/3/movie/" + id);
+
+      CloseableHttpClient httpClient = HttpClients.createDefault();
+      HttpGetHC4 httpGet = new HttpGetHC4(url.toString());
+      try
+      {
+          // TODO: Handle error codes (503 for too many requests, 404 for not found etc.)
+          CloseableHttpResponse response = httpClient.execute(httpGet);
+          String json = EntityUtils.toString(response.getEntity());
+
+          return JsonTools.getMovie(json);
+      } catch (IOException e)
+      {
+          e.printStackTrace();
+      }
+
+      return null;
   }
 
   private static URIBuilder getBaseUriBuilder()

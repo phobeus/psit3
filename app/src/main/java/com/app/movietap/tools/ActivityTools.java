@@ -19,11 +19,11 @@ public class ActivityTools
 
     if (id == R.id.action_collection)
     {
-      Intent intent = createActivity("BrowseMoviesActivity", activity.getApplicationContext());
+      Intent intent = createActivity("RememberMoviesActivity", activity.getApplicationContext());
       activity.startActivity(intent);
     } else if (id == R.id.action_wish)
     {
-      Intent intent = createActivity("BrowseMoviesActivity", activity.getApplicationContext());
+      Intent intent = createActivity("WishMoviesActivity", activity.getApplicationContext());
       activity.startActivity(intent);
     } else if (id == R.id.action_search_view)
     {

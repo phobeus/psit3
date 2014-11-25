@@ -33,11 +33,11 @@ public class SearchActivity extends BaseActivity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_search);
 
-    _resultList = (ListView) findViewById(R.id.search_listView);
+    _resultList = (ListView) findViewById(R.id.search_listViewResults);
 
     handleIntent(getIntent());
 
-    ((Button) findViewById(R.id.button_search)).setOnClickListener(new View.OnClickListener()
+    ((Button) findViewById(R.id.search_buttonSearch)).setOnClickListener(new View.OnClickListener()
     {
       @Override
       public void onClick(View view)
@@ -46,7 +46,7 @@ public class SearchActivity extends BaseActivity
       }
     });
 
-    EditText editText = (EditText) findViewById(R.id.search_searchBox);
+    EditText editText = (EditText) findViewById(R.id.search_searchEditText);
     editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
       @Override
       public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -62,7 +62,7 @@ public class SearchActivity extends BaseActivity
 
   public void performSearch()
   {
-    String query = ((EditText) findViewById(R.id.search_searchBox)).getText().toString();
+    String query = ((EditText) findViewById(R.id.search_searchEditText)).getText().toString();
     new SearchMovieOperation().execute(query);
 
     // Hide Keyboard

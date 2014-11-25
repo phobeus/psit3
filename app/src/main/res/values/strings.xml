@@ -10,5 +10,6 @@
     <string name="title_activity_login">Anmeldung</string>
     <string name="title_activity_rrgister">Registrierung</string>
     <string name="title_activity_browse_movies">Filme</string>
+    <string name="title_activity_search_result">SearchResultActivity</string>
 
 </resources>

@@ -105,6 +105,11 @@ public class SearchActivity extends BaseActivity
 
   private void setListResult(List<Movie> movies)
   {
+    // WIP - show the search result in it's own activity
+    //Intent intent = createActivity("SearchResultActivity", this.getApplicationContext());
+    //intent.putParcelableArrayListExtra("searchresult", (ArrayList)movies);
+    //startActivity(intent);
+
     MovieList adapter = new MovieList(SearchActivity.this, movies);
     _resultList.setAdapter(adapter);
   }

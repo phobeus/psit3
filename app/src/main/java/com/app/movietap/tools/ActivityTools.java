@@ -43,7 +43,7 @@ public class ActivityTools
    * @param applicationContext
    * @return new Intent
    */
-  protected static Intent createActivity(String classNameToActivate, Context applicationContext) {
+  public static Intent createActivity(String classNameToActivate, Context applicationContext) {
     try {
       Class<?> activityClass = Class.forName("com.app.movietap."
         + classNameToActivate);

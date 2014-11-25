@@ -15,7 +15,9 @@
         android:layout_toStartOf="@+id/button_search"
         android:layout_alignBottom="@+id/button_search"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentStart="true"
+        android:inputType="text"
+        android:imeOptions="actionSearch"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -24,7 +26,8 @@
         android:id="@+id/button_search"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"/>
+        android:layout_alignParentEnd="true"
+        android:focusable="true"/>
 
     <Switch
         android:layout_width="wrap_content"

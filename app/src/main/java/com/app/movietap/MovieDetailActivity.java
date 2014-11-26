@@ -3,52 +3,31 @@ package com.app.movietap;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.androidquery.AQuery;
-import com.app.movietap.tools.ApiTools;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.app.movietap.model.Movie;
 
 
 public class MovieDetailActivity extends BaseActivity {
 
-    private AQuery _rowQuery;
-
-    protected TextView movieTitleText;
-    String moviePoster;
-    String movieRelease;
-    String movieVote;
-
+    private Movie _movie;
+    private AQuery _aQuery;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
 
-        JSONObject movieObject = ApiTools.getMovie(54320);
-        try {
-            String backdrop =  movieObject.getString("backdrop_path");
-            Toast.makeText(MovieDetailActivity.this, "backdrop " + backdrop, Toast.LENGTH_SHORT).show();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
         //get information from last activity
-        String movieTitle = getIntent().getStringExtra("title");
-        String moviePoster = getIntent().getStringExtra("poster");
-        String movieRelease = getIntent().getStringExtra("release");
-        String movieVote = getIntent().getStringExtra("vote");
+        _movie = (Movie)getIntent().getExtras().getParcelable("movie");
+        TextView title = (TextView)findViewById(R.id.movieDetail_textView);
+        title.setText(_movie.getTitle());
 
-        moviePoster = "http://image.tmdb.org/t/p/w185" + moviePoster;
+        _aQuery = new AQuery(this);
+        _aQuery.id(R.id.movieDetail_imageViewPoster).image("http://image.tmdb.org/t/p/w185" + _movie.getPoster());
+
 
         //http://stackoverflow.com/questions/2471935/how-to-load-an-imageview-by-url-in-android
-
-
-
-
-
-
     }
 
     @Override

@@ -37,10 +37,7 @@ public class RememberMoviesActivity extends ListActivity
   public void onListItemClick(ListView l, View v, int position, long id)
   {
       Intent goToDetail = new Intent(RememberMoviesActivity.this, MovieDetailActivity.class);
-      goToDetail.putExtra("title", _movies.get(position).getTitle());
-      goToDetail.putExtra("poster", _movies.get(position).getPoster());
-      goToDetail.putExtra("release", _movies.get(position).getReleaseDate());
-      goToDetail.putExtra("vote", _movies.get(position).getVoteAverage());
+      goToDetail.putExtra("movie", _movies.get(position));
       startActivity(goToDetail);
   }
 

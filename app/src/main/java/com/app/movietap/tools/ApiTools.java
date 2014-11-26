@@ -44,7 +44,7 @@ public class ApiTools
     return new ArrayList<Movie>();
   }
 
-  public static JSONObject getMovie(int id)
+  public static Movie getMovie(int id)
   {
       URIBuilder url = getBaseUriBuilder();
       if(url == null) { return null; }

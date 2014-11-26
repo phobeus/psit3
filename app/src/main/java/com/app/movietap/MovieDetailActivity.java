@@ -23,11 +23,12 @@ public class MovieDetailActivity extends BaseActivity {
         TextView title = (TextView)findViewById(R.id.movieDetail_textView);
         title.setText(_movie.getTitle());
 
+        //save image from the movie locally and display it
         _aQuery = new AQuery(this);
         _aQuery.id(R.id.movieDetail_imageViewPoster).image("http://image.tmdb.org/t/p/w185" + _movie.getPoster());
 
+        //
 
-        //http://stackoverflow.com/questions/2471935/how-to-load-an-imageview-by-url-in-android
     }
 
     @Override

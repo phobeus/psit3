@@ -2,6 +2,7 @@ package com.app.movietap.tools;
 
 import android.util.Log;
 
+import com.app.movietap.api.UrlCache;
 import com.app.movietap.model.Movie;
 
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -51,21 +52,9 @@ public class ApiTools
 
       url.setPath("/3/movie/" + id);
 
-      CloseableHttpClient httpClient = HttpClients.createDefault();
-      HttpGetHC4 httpGet = new HttpGetHC4(url.toString());
-      try
-      {
-          // TODO: Handle error codes (503 for too many requests, 404 for not found etc.)
-          CloseableHttpResponse response = httpClient.execute(httpGet);
-          String json = EntityUtils.toString(response.getEntity());
+      String json = UrlCache.getUrl(url);
 
-          return JsonTools.getMovie(json);
-      } catch (IOException e)
-      {
-          e.printStackTrace();
-      }
-
-      return null;
+      return JsonTools.getMovie(json);
   }
 
   private static URIBuilder getBaseUriBuilder()

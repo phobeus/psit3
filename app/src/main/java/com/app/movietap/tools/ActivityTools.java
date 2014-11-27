@@ -8,6 +8,9 @@ import android.view.MenuItem;
 
 import com.app.movietap.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class ActivityTools
 {
   public static boolean HandleOptionsItemSelected(MenuItem item, Activity activity)
@@ -58,5 +61,11 @@ public class ActivityTools
     // return main activity in case of not found activity
     return createActivity("com.app.movietap.NavigationActivity", applicationContext);
   }
+
+    public static String fomateDate(Date d)
+    {
+        SimpleDateFormat dt = new SimpleDateFormat("dd.M.yyyy");
+        return dt.format(d);
+    }
 
 }

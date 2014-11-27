@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.androidquery.AQuery;
 import com.app.movietap.R;
 import com.app.movietap.model.Movie;
+import com.app.movietap.tools.ActivityTools;
 
 import java.util.List;
 
@@ -29,16 +30,22 @@ public class MovieList extends ArrayAdapter<Movie>
     LayoutInflater inflater = _context.getLayoutInflater();
     View rowView = inflater.inflate(R.layout.movie_row, null, true);
     TextView txtTitle = (TextView) rowView.findViewById(R.id.txt);
+    TextView txtDate = (TextView) rowView.findViewById(R.id.date);
     TextView txtDesc = (TextView) rowView.findViewById(R.id.description);
     Movie movie = _movies.get(position);
+
     txtTitle.setText(movie.getTitle());
     if(movie.getReleaseDate() != null)
     {
-      txtDesc.setText(movie.getReleaseDate().toString());
+      txtDate.setText(ActivityTools.fomateDate(movie.getReleaseDate()));
     }
     else if(!movie.getOriginalTitle().equals(movie.getTitle()))
     {
       txtDesc.setText(movie.getOriginalTitle());
+    }
+    if(movie.getTagline() != null)
+    {
+        txtDesc.setText(movie.getTagline());
     }
     _rowQuery = new AQuery(rowView);
     _rowQuery.id(R.id.img).image("http://image.tmdb.org/t/p/w185" + movie.getPoster());

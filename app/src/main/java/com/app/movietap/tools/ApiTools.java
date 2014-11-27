@@ -11,7 +11,6 @@ import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -64,6 +63,7 @@ public class ApiTools
     {
       url = new URIBuilder("http://api.themoviedb.org");
       url.addParameter("api_key", _apiKey);
+      url.addParameter("language", "de");
     } catch (URISyntaxException e)
     {
       Log.e("ApiTools", e.getMessage());

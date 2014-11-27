@@ -3,6 +3,9 @@ package com.app.movietap.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.util.Date;
 
 public class Movie implements Parcelable
@@ -117,6 +120,58 @@ public class Movie implements Parcelable
     return _popularity;
   }
 
+  public void setGenres (JSONArray genresArray)
+  {
+      for(int i = 0; i < genresArray.length(); i++){
+          String name = "";
+          try {
+              name = genresArray.getJSONObject(i).getString("name");
+          } catch (JSONException e) {
+              e.printStackTrace();
+          }
+
+          if(_genres == null) {
+              _genres = name;
+          } else  {
+              _genres += ", " + name;
+          }
+      }
+  }
+  public void setProductionCompanies (JSONArray companiesArray)
+  {
+      //production_companies
+      for(int i = 0; i < companiesArray.length(); i++){
+          String name = "";
+          try {
+              name = companiesArray.getJSONObject(i).getString("name");
+          } catch (JSONException e) {
+              e.printStackTrace();
+          }
+
+          if(_productionCompanies == null) {
+              _productionCompanies = name;
+          } else  {
+              _productionCompanies += ", " + name;
+          }
+      }
+  }
+
+  public void setOverview (String overview)
+  {
+      _overview = overview;
+  }
+
+  public void setTagline (String tagline)
+  {
+      _tagline = tagline;
+  }
+
+  public String getGenres(){ return _genres; };
+  public String getOverview(){ return _overview; };
+  public String getTagline(){ return _tagline; };
+  public String getProductionCompanies(){ return _productionCompanies; };
+
+
   private int _id;
   private boolean _adult;
   private String _backdrop;
@@ -127,4 +182,9 @@ public class Movie implements Parcelable
   private double _popularity;
   private double _voteAverage;
   private int _voteCount;
+
+  private String _genres;
+  private String _overview; //short description
+  private String _tagline;  //subtitle
+  private String _productionCompanies;
 }

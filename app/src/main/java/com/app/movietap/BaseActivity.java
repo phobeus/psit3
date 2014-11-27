@@ -43,5 +43,4 @@ public abstract class BaseActivity extends Activity
 
     return ActivityTools.HandleOptionsItemSelected(item, this);
   }
-
 }

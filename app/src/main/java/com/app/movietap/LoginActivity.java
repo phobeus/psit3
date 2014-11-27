@@ -57,8 +57,8 @@ public class LoginActivity extends Activity {
                         Toast.makeText(LoginActivity.this, "Willkommen zurück!", Toast.LENGTH_LONG).show();
 
                         //redirect to the home activity
-                        Intent takeUserHome = new Intent(LoginActivity.this, HomeActivity.class);
-                        startActivity(takeUserHome);
+                        Intent takeUserToSearch = new Intent(LoginActivity.this, SearchActivity.class);
+                        startActivity(takeUserToSearch);
                     } else {
                         //login was not secussfull
                         Toast.makeText(LoginActivity.this, "Anmeldung fehlgeschlagen", Toast.LENGTH_SHORT).show();
@@ -72,8 +72,8 @@ public class LoginActivity extends Activity {
       buttonNoLogin.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-                Intent takeUserHome = new Intent(LoginActivity.this, HomeActivity.class);
-                startActivity(takeUserHome);
+                Intent takeUserToSearch = new Intent(LoginActivity.this, SearchActivity.class);
+                startActivity(takeUserToSearch);
          }
       });
 

@@ -39,14 +39,14 @@
         </activity>
         <activity
             android:name="com.app.movietap.WishMoviesActivity"
-            android:label="@string/title_activity_wish_movies" >
+            android:label="@string/title_activity_remember_movies" >
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
         <activity
             android:name="com.app.movietap.RememberMoviesActivity"
-            android:label="@string/title_activity_remember_movies" >
+            android:label="@string/title_activity_wish_movies" >
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />

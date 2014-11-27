@@ -85,11 +85,10 @@ public class RegisterActivity extends Activity {
                     Toast.makeText(RegisterActivity.this, "erfolgreich registriert", Toast.LENGTH_LONG).show();
 
                     //redirect user to homeActivity
-                    Intent takeUserHome = new Intent(RegisterActivity.this, HomeActivity.class);
-                    startActivity(takeUserHome);
+                    Intent takeUserToSearch = new Intent(RegisterActivity.this, SearchActivity.class);
+                    startActivity(takeUserToSearch);
                 } else {
                     Toast.makeText(RegisterActivity.this, "Registrierung fehlgeschlagen", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(RegisterActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
         });

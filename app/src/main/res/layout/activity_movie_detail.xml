@@ -1,3 +1,7 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -8,41 +12,138 @@
 
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Movie title"
-        android:id="@+id/movieDetail_textView"
+        android:id="@+id/movieDetail_textViewTitle"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_centerHorizontal="true"
+        android:capitalize="characters"
+        android:textColor="@color/green_overlay"
+        android:textIsSelectable="false"
+        android:textSize="35dp"
+        android:autoText="true"
+        android:gravity="center"
+        android:singleLine="false"
+        android:paddingBottom="5dp"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+        android:paddingRight="5dp"
+        android:padding="5dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Subtitle"
+        android:id="@+id/movieDetail_textViewSubtitle"
+        android:layout_below="@+id/movieDetail_textViewTitle"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:gravity="center" />
 
     <ImageView
         android:id="@+id/movieDetail_imageViewPoster"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_launcher"
-        android:layout_below="@+id/movieDetail_textView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@+id/movieDetail_textViewSubtitle"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="20dp" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Genre"
+        android:id="@+id/textViewTitleGenre"
+        android:layout_below="@+id/movieDetail_imageViewPoster"
+        android:textColor="@color/green_overlay" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
-        android:id="@+id/textView"
-        android:layout_below="@+id/movieDetail_imageViewPoster"/>
+        android:text="Genre"
+        android:id="@+id/movieDetail_textViewGenre"
+        android:layout_below="@+id/textViewTitleGenre"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Erschienen"
+        android:id="@+id/textViewTitleRelease"
+        android:layout_below="@+id/movieDetail_textViewGenre"
+        android:textColor="@color/green_overlay" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Release Year"
+        android:id="@+id/movieDetail_textViewReleased"
+        android:layout_below="@+id/textViewTitleRelease"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Beschreibung"
+        android:id="@+id/textViewTitleDescription"
+        android:layout_below="@+id/movieDetail_textViewReleased"
+        android:textColor="@color/green_overlay" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Description"
+        android:id="@+id/movieDetail_textViewDescription"
+        android:layout_below="@+id/textViewTitleDescription"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Produktionsfirmen"
+        android:id="@+id/textViewTitleProduction"
+        android:layout_below="@+id/movieDetail_textViewDescription"
+        android:textColor="@color/green_overlay" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Production Companies"
+        android:id="@+id/movieDetail_textViewProduction"
+        android:layout_below="@+id/textViewTitleProduction"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Bewertung"
+        android:id="@+id/textViewTitleRating"
+        android:layout_below="@+id/movieDetail_textViewProduction"
+        android:textColor="@color/green_overlay" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Rating"
+        android:id="@+id/movieDetail_textViewRating"
+        android:layout_below="@+id/textViewTitleRating"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="zur Wunschliste hinzufügen"
         android:id="@+id/movieDetail_buttonWish"
-        android:layout_below="@+id/movieDetail_imageViewPoster"
+        android:layout_below="@+id/movieDetail_textViewRating"
         android:layout_alignParentLeft="true"
         android:drawableLeft="@drawable/ic_gift"
         android:layout_alignParentStart="true"
@@ -60,4 +161,6 @@
         android:textColor="@color/green_overlay" />
 
 
+
 </RelativeLayout>
+</ScrollView>

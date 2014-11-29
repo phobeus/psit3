@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">MovieTap</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
@@ -12,6 +13,7 @@
     <string name="title_activity_wish_movies">Merkliste</string>
     <string name="title_activity_remember_movies">Wunschliste</string>
     <string name="title_activity_movie_detail">Filmdetails</string>
-    <string name="title_activity_search_result">SearchResultActivity</string>
+    <string name="title_activity_search_result">Suchergebnisse</string>
+    <string name="title_activity_settings">Einstellungen</string>
 
 </resources>

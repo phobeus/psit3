@@ -30,8 +30,12 @@ public class ActivityTools
       activity.startActivity(intent);
     } else if (id == R.id.action_search_view)
     {
-      Intent intent = createActivity("SearchActivity", activity.getApplicationContext());
-      activity.startActivity(intent);
+        Intent intent = createActivity("SearchActivity", activity.getApplicationContext());
+        activity.startActivity(intent);
+    } else if (id == R.id.action_settings)
+    {
+        Intent intent = createActivity("SettingsActivity", activity.getApplicationContext());
+        activity.startActivity(intent);
     }
 
     return true;

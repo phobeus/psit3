@@ -66,6 +66,10 @@
             android:name="com.app.movietap.MovieDetailActivity"
             android:label="@string/title_activity_movie_detail" >
         </activity>
+        <activity
+            android:name="com.app.movietap.SettingsActivity"
+            android:label="@string/title_activity_settings" >
+        </activity>
     </application>
 
 </manifest>

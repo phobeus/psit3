@@ -1,5 +1,7 @@
 package com.app.movietap.api;
 
+import android.util.Log;
+
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGetHC4;
 import org.apache.http.client.utils.URIBuilder;
@@ -26,6 +28,7 @@ public class UrlCache {
                 CloseableHttpResponse response = httpClient.execute(httpGet);
                 String result = EntityUtils.toString(response.getEntity());
                 _cache.put(uri, result);
+              Log.d("caching", "Cached URL result (" + result.length() + "B)");
             } catch (IOException e) {
                 e.printStackTrace();
                 return null;

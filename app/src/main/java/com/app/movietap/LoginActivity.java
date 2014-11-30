@@ -3,6 +3,7 @@ package com.app.movietap;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.app.movietap.model.database.User;
+import com.app.movietap.tools.PersistenceHandler;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -72,7 +75,11 @@ public class LoginActivity extends Activity {
       buttonNoLogin.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-                Intent takeUserToSearch = new Intent(LoginActivity.this, SearchActivity.class);
+          String uid = Settings.Secure.getString(LoginActivity.this.getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+          PersistenceHandler handler = new PersistenceHandler(LoginActivity.this);
+          User user = handler.getOrCreateLocalUser(uid);
+
+          Intent takeUserToSearch = new Intent(LoginActivity.this, SearchActivity.class);
                 startActivity(takeUserToSearch);
          }
       });

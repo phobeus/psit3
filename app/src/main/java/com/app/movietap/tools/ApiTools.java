@@ -27,21 +27,11 @@ public class ApiTools
     url.setPath("/3/search/movie");
     url.addParameter("query", query);
 
-    CloseableHttpClient httpClient = HttpClients.createDefault();
-    HttpGetHC4 httpGet = new HttpGetHC4(url.toString());
-    try
-    {
-      // TODO: Handle error codes (503 for too many requests, 404 for not found etc.)
-      CloseableHttpResponse response = httpClient.execute(httpGet);
-      String json = EntityUtils.toString(response.getEntity());
+    String json = UrlCache.getUrl(url);
 
-      return JsonTools.getMovies(json);
-    } catch (IOException e)
-    {
-      e.printStackTrace();
-    }
+    List<Movie> result = JsonTools.getMovies(json);
 
-    return new ArrayList<Movie>();
+    return result != null ? result : new ArrayList<Movie>();
   }
 
   public static Movie getMovie(int id)

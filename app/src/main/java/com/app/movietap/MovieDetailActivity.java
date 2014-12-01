@@ -18,9 +18,9 @@ import com.app.movietap.tools.PersistenceHandler;
 
 public class MovieDetailActivity extends BaseActivity
 {
-
   private Movie _movie;
   private AQuery _aQuery;
+  private StoredMovie _storedMovie;
 
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -39,15 +39,33 @@ public class MovieDetailActivity extends BaseActivity
     _aQuery = new AQuery(this);
     _aQuery.id(R.id.movieDetail_imageViewPoster).image("http://image.tmdb.org/t/p/w300" + _movie.getPoster());
 
+    PersistenceHandler handler = new PersistenceHandler(this);
+    Object result = handler.loadWhere(StoredMovie.class, "MovieId = ?", new String[]{_movie.getId() + ""}, null, null, null);
+    if (result != null)
+    {
+      _storedMovie = (StoredMovie) result;
+      ((Button) findViewById(R.id.movieDetail_buttonWish)).setText("von Wunschliste entfernen");
+    }
+
     Button favoritesButton = (Button) findViewById(R.id.movieDetail_buttonWish);
-    favoritesButton.setOnClickListener(new View.OnClickListener() {
+    favoritesButton.setOnClickListener(new View.OnClickListener()
+    {
       @Override
-      public void onClick(View view) {
-        StoredMovie storedMovie = new StoredMovie(_movie);
-        storedMovie.Status = MovieStatus.WantToSee;
-        storedMovie.Shared = MovieSharedStatus.WithNobody;
+      public void onClick(View view)
+      {
         PersistenceHandler handler = new PersistenceHandler(MovieDetailActivity.this);
-        handler.save(storedMovie);
+        if (_storedMovie != null)
+        {
+          handler.deleteWhere(StoredMovie.class, "Id = ?", new String[]{_storedMovie.Id + ""});
+          ((Button) findViewById(R.id.movieDetail_buttonWish)).setText("zu Wunschliste hinzufügen");
+        } else
+        {
+          _storedMovie = new StoredMovie(_movie);
+          _storedMovie.Status = MovieStatus.WantToSee;
+          _storedMovie.Shared = MovieSharedStatus.WithNobody;
+          _storedMovie.Id = handler.save(_storedMovie);
+          ((Button) findViewById(R.id.movieDetail_buttonWish)).setText("von Wunschliste entfernen");
+        }
       }
     });
 

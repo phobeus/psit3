@@ -6,7 +6,7 @@ public class SqlTools
   {
     if (Integer.class.isAssignableFrom(type) || int.class.isAssignableFrom(type))
     {
-      return "INT";
+      return "INTEGER";
     }
 
     if (String.class.isAssignableFrom(type) || Boolean.class.isAssignableFrom(type))
@@ -32,11 +32,11 @@ public class SqlTools
     {
       return String.class;
     }
-    if (field.isAssignableFrom(Double.class))
+    if (field.isAssignableFrom(Double.class) || field.isAssignableFrom(double.class))
     {
       return Double.class;
     }
-    if (field.isAssignableFrom(Float.class))
+    if (field.isAssignableFrom(Float.class) || field.isAssignableFrom(float.class))
     {
       return Float.class;
     }

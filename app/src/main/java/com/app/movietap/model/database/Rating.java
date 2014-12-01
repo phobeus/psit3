@@ -1,5 +1,6 @@
 package com.app.movietap.model.database;
 
+@Persistent
 public class Rating
 {
   @Persistent(Primary = true)

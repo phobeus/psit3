@@ -43,14 +43,13 @@ public class PersistenceHandler extends SQLiteOpenHelper
         sqlBuilder.append(field.Name);
         sqlBuilder.append(" ");
         sqlBuilder.append(SqlTools.getSqlType(field.Type));
-        sqlBuilder.append(" ");
         if (field.IsPrimary)
         {
-          sqlBuilder.append(" PRIMARY KEY ");
+          sqlBuilder.append(" PRIMARY KEY AUTOINCREMENT");
         }
         if (i + 1 < cls.Fields.size())
         {
-          sqlBuilder.append(",");
+          sqlBuilder.append(", ");
         }
       }
 
@@ -63,12 +62,18 @@ public class PersistenceHandler extends SQLiteOpenHelper
   }
 
   @Override
-  public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i2)
+  public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
   {
+    List<PersistableClass> classes = this.getPersistableClasses();
+    for (PersistableClass cls : classes)
+    {
+      db.execSQL("DROP TABLE IF EXISTS " + cls.Name);
+    }
 
+    onCreate(db);
   }
 
-  public void save(Object object)
+  public int save(Object object)
   {
     List<PersistableField> fields = getPersistableFields(object.getClass());
     ContentValues values = new ContentValues();
@@ -106,7 +111,10 @@ public class PersistenceHandler extends SQLiteOpenHelper
     }
 
     SQLiteDatabase db = this.getWritableDatabase();
-    db.insert(object.getClass().getSimpleName(), null, values);
+    int result = (int)db.insert(object.getClass().getSimpleName(), null, values);
+    db.close();
+
+    return result;
   }
 
   public Object load(Cursor cursor, Class<?> cls)
@@ -160,6 +168,35 @@ public class PersistenceHandler extends SQLiteOpenHelper
     return result;
   }
 
+  public Object loadWhere(Class<?> cls, String where, String[] values, String groupBy, String orderBy, String limit)
+  {
+    SQLiteDatabase db = getWritableDatabase();
+    ArrayList<String> fields = new ArrayList<String>();
+    for (PersistableField f : getPersistableFields(cls))
+    {
+      fields.add(f.Name);
+    }
+
+    Cursor cursor = db.query(cls.getSimpleName(), Arrays.copyOf(fields.toArray(), fields.size(), String[].class), where, values, groupBy, null, orderBy, limit);
+    if (cursor != null && cursor.getCount() == 1)
+    {
+      cursor.moveToFirst();
+      Object loadedObject = load(cursor, cls);
+      db.close();
+
+      return loadedObject;
+    }
+
+    return null;
+  }
+
+  public void deleteWhere(Class<?> cls, String where, String[] values)
+  {
+    SQLiteDatabase db = getWritableDatabase();
+    db.delete(cls.getSimpleName(), where, values);
+    db.close();
+  }
+
   public User getOrCreateLocalUser(String uid)
   {
     SQLiteDatabase db = this.getWritableDatabase();
@@ -182,6 +219,7 @@ public class PersistenceHandler extends SQLiteOpenHelper
       user.UID = uid;
       save(user);
     }
+    db.close();
 
     return user;
   }
@@ -242,5 +280,5 @@ public class PersistenceHandler extends SQLiteOpenHelper
     return fields;
   }
 
-  private static final int DATABASE_VERSION = 1;
+  private static final int DATABASE_VERSION = 6;
 }

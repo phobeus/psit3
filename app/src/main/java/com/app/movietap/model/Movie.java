@@ -31,7 +31,8 @@ public class Movie implements Parcelable
     _backdrop = in.readString();
     _title = in.readString();
     _originalTitle = in.readString();
-    _releaseDate = new Date(in.readLong());
+    long milliseconds = in.readLong();
+    _releaseDate = milliseconds == 0 ? null : new Date(milliseconds);
     _poster = in.readString();
     _popularity = in.readDouble();
     _voteAverage = in.readDouble();
@@ -52,7 +53,8 @@ public class Movie implements Parcelable
     parcel.writeString(getBackdrop());
     parcel.writeString(getTitle());
     parcel.writeString(getOriginalTitle());
-    parcel.writeLong(getReleaseDate().getTime());
+    Date releaseDate = getReleaseDate();
+    parcel.writeLong(releaseDate != null ? releaseDate.getTime() : 0);
     parcel.writeString(getPoster());
     parcel.writeDouble(getPopularity());
     parcel.writeDouble(getVoteAverage());

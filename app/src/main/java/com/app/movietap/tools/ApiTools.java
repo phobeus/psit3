@@ -2,17 +2,11 @@ package com.app.movietap.tools;
 
 import android.util.Log;
 
-import com.app.movietap.api.UrlCache;
+import com.app.movietap.api.UrlCacheTools;
 import com.app.movietap.model.Movie;
 
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGetHC4;
 import org.apache.http.client.utils.URIBuilder;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
 
-import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +21,7 @@ public class ApiTools
     url.setPath("/3/search/movie");
     url.addParameter("query", query);
 
-    String json = UrlCache.getUrl(url);
+    String json = UrlCacheTools.getUrl(url);
 
     List<Movie> result = JsonTools.getMovies(json);
 
@@ -41,7 +35,7 @@ public class ApiTools
 
       url.setPath("/3/movie/" + id);
 
-      String json = UrlCache.getUrl(url);
+      String json = UrlCacheTools.getUrl(url);
 
       return JsonTools.getMovie(json);
   }

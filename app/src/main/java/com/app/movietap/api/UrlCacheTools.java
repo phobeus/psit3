@@ -12,7 +12,8 @@ import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 import java.util.HashMap;
 
-public class UrlCache {
+public class UrlCacheTools
+{
     public static String getUrl(URIBuilder uri) {
         return getUrl(uri.toString());
     }

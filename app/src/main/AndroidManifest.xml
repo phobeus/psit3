@@ -63,6 +63,13 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="com.app.movietap.SearchResultActivity"
+            android:label="@string/title_activity_search_result" >
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
+        <activity
             android:name="com.app.movietap.MovieDetailActivity"
             android:label="@string/title_activity_movie_detail" >
         </activity>

@@ -10,34 +10,28 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.movietap.model.Movie;
 import com.app.movietap.tools.ApiTools;
-import com.app.movietap.ui.MovieList;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class SearchActivity extends BaseActivity
 {
-  private ListView _resultList;
-
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_search);
 
-    _resultList = (ListView) findViewById(R.id.search_listViewResults);
-
     handleIntent(getIntent());
 
-    ((Button) findViewById(R.id.search_buttonSearch)).setOnClickListener(new View.OnClickListener()
+    findViewById(R.id.search_buttonSearch).setOnClickListener(new View.OnClickListener()
     {
       @Override
       public void onClick(View view)
@@ -103,15 +97,11 @@ public class SearchActivity extends BaseActivity
     }
   }
 
-  private void setListResult(List<Movie> movies)
+  private void openSearchResult(List<Movie> movies)
   {
-    // WIP - show the search result in it's own activity
-    //Intent intent = createActivity("SearchResultActivity", this.getApplicationContext());
-    //intent.putParcelableArrayListExtra("searchresult", (ArrayList)movies);
-    //startActivity(intent);
-
-    MovieList adapter = new MovieList(SearchActivity.this, movies);
-    _resultList.setAdapter(adapter);
+    Intent intent = new Intent(SearchActivity.this, SearchResultActivity.class);
+    intent.putParcelableArrayListExtra("searchresult", (ArrayList)movies);
+    startActivity(intent);
   }
 
   private class SearchMovieOperation extends AsyncTask<String, Void, List<Movie>>
@@ -127,7 +117,7 @@ public class SearchActivity extends BaseActivity
     @Override
     protected void onPostExecute(List<Movie> result)
     {
-      setListResult(result);
+      openSearchResult(result);
     }
 
     @Override

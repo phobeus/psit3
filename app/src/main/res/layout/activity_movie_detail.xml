@@ -146,8 +146,7 @@
         android:layout_below="@+id/movieDetail_textViewRating"
         android:layout_alignParentLeft="true"
         android:drawableLeft="@drawable/ic_gift"
-        android:layout_alignParentStart="true"
-        android:textColor="@color/green_overlay" />
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="match_parent"
@@ -157,8 +156,7 @@
         android:layout_below="@+id/movieDetail_buttonWish"
         android:layout_alignParentLeft="true"
         android:drawableLeft="@drawable/ic_library"
-        android:layout_alignParentStart="true"
-        android:textColor="@color/green_overlay" />
+        android:layout_alignParentStart="true" />
 
 
 

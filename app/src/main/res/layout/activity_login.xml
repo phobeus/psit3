@@ -53,8 +53,7 @@
         android:id="@+id/buttonLoginLogin"
         android:layout_below="@+id/editTextPasswordLogin"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:textColor="@color/green_overlay" />
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="match_parent"
@@ -63,8 +62,7 @@
         android:id="@+id/buttonNoLogin"
         android:layout_below="@+id/buttonLoginLogin"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:textColor="@color/green_overlay" />
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="match_parent"

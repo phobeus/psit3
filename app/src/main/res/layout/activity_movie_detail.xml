@@ -10,6 +10,27 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.app.movietap.MovieDetailActivity">
 
+    <Button
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:text=" "
+        android:id="@+id/movieDetail_buttonRemember"
+        android:drawableLeft="@drawable/ic_library"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/movieDetail_textViewTitle"
+        android:layout_alignEnd="@+id/movieDetail_textViewTitle"
+        android:background="@color/white" />
+
+    <Button
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:text=" "
+        android:id="@+id/movieDetail_buttonWish"
+        android:drawableLeft="@drawable/ic_gift"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/movieDetail_buttonRemember"
+        android:layout_toStartOf="@+id/movieDetail_buttonRemember"
+        android:background="@color/white" />
 
     <TextView
         android:layout_width="match_parent"
@@ -17,7 +38,6 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Movie title"
         android:id="@+id/movieDetail_textViewTitle"
-        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:capitalize="characters"
         android:textColor="@color/green_overlay"
@@ -30,7 +50,9 @@
         android:paddingLeft="5dp"
         android:paddingTop="5dp"
         android:paddingRight="5dp"
-        android:padding="5dp" />
+        android:padding="5dp"
+        android:layout_below="@+id/movieDetail_buttonRemember"/>
+
 
     <TextView
         android:layout_width="match_parent"
@@ -39,9 +61,8 @@
         android:text="Subtitle"
         android:id="@+id/movieDetail_textViewSubtitle"
         android:layout_below="@+id/movieDetail_textViewTitle"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:gravity="center" />
+        android:gravity="center"
+        android:textSize="12dp" />
 
     <ImageView
         android:id="@+id/movieDetail_imageViewPoster"
@@ -138,26 +159,27 @@
         android:id="@+id/movieDetail_textViewRating"
         android:layout_below="@+id/textViewTitleRating"/>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="zur Wunschliste hinzufügen"
-        android:id="@+id/movieDetail_buttonWish"
-        android:layout_below="@+id/movieDetail_textViewRating"
-        android:layout_alignParentLeft="true"
-        android:drawableLeft="@drawable/ic_gift"
-        android:layout_alignParentStart="true" />
+    <!--
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="zur Wunschliste hinzufügen"
+            android:id="@+id/movieDetail_buttonWish"
+            android:layout_below="@+id/movieDetail_textViewRating"
+            android:layout_alignParentLeft="true"
+            android:drawableLeft="@drawable/ic_gift"
+            android:layout_alignParentStart="true" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="zur Merkliste hinzufügen"
-        android:id="@+id/movieDetail_buttonRemember"
-        android:layout_below="@+id/movieDetail_buttonWish"
-        android:layout_alignParentLeft="true"
-        android:drawableLeft="@drawable/ic_library"
-        android:layout_alignParentStart="true" />
-
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="zur Merkliste hinzufügen"
+            android:id="@+id/movieDetail_buttonRemember"
+            android:layout_below="@+id/movieDetail_buttonWish"
+            android:layout_alignParentLeft="true"
+            android:drawableLeft="@drawable/ic_library"
+            android:layout_alignParentStart="true" />
+    -->
 
 
 </RelativeLayout>

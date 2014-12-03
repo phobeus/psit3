@@ -16,6 +16,10 @@ import com.app.movietap.tools.ActivityTools;
 import com.app.movietap.tools.ApiTools;
 import com.app.movietap.tools.PersistenceHandler;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.Date;
+
 
 public class MovieDetailActivity extends BaseActivity
 {
@@ -133,7 +137,8 @@ public class MovieDetailActivity extends BaseActivity
     production.setText(detailedMovie.getProductionCompanies());
 
     TextView release = (TextView) findViewById(R.id.movieDetail_textViewReleased);
-    release.setText(ActivityTools.fomateDate(detailedMovie.getReleaseDate()));
+    Date releaseDate = detailedMovie.getReleaseDate();
+    release.setText(releaseDate != null ? ActivityTools.fomateDate(releaseDate) : StringUtils.EMPTY);
 
     TextView rating = (TextView) findViewById(R.id.movieDetail_textViewRating);
     rating.setText(Double.toString(detailedMovie.getVoteAverage()));

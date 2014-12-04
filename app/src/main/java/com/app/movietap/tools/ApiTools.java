@@ -28,6 +28,20 @@ public class ApiTools
     return result != null ? result : new ArrayList<Movie>();
   }
 
+    public static List<Movie> popularMovies()
+    {
+        URIBuilder url = getBaseUriBuilder();
+        if(url == null) { return null; }
+
+        url.setPath("/3/discover/movie?sort_by=popularity.desc");
+
+        String json = UrlCacheTools.getUrl(url);
+
+        List<Movie> result = JsonTools.getMovies(json);
+
+        return result != null ? result : new ArrayList<Movie>();
+    }
+
   public static Movie getMovie(int id)
   {
       URIBuilder url = getBaseUriBuilder();

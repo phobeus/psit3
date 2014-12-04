@@ -58,7 +58,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Go without login"
+        android:text="Anonym verwenden"
         android:id="@+id/buttonNoLogin"
         android:layout_below="@+id/buttonLoginLogin"
         android:layout_alignParentLeft="true"

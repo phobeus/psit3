@@ -8,6 +8,45 @@
                 android:paddingTop="@dimen/activity_vertical_margin"
                 tools:context="com.app.movietap.SearchActivity">
 
+
+    <Switch
+        android:id="@+id/search_switchShowAdult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/search_buttonSearch"
+        android:layout_below="@+id/search_searchEditText"
+        android:checked="true"
+        android:text="Erwachsenenfilme"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+    <LinearLayout
+        android:id="@+id/search_gridLayoutSettings"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/search_switchShowAdult">
+
+        <TextView
+            android:id="@+id/search_textViewYear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Jahr"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+        <EditText
+            android:id="@+id/search_editTextYear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="number"/>
+
+    </LinearLayout>
+
+
     <EditText
         android:id="@+id/search_searchEditText"
         android:layout_width="wrap_content"
@@ -24,49 +63,34 @@
         android:id="@+id/search_buttonSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Search"
+        android:text="Suche"
         android:drawableLeft="@drawable/ic_action_search"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:focusable="true"/>
 
-    <Switch
-        android:id="@+id/search_switchShowAdult"
-        android:layout_width="wrap_content"
+    <Button
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/search_buttonSearch"
+        android:text="zeige beliebteste"
+        android:id="@+id/search_buttonPopular"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/search_gridLayoutSettings"
+        android:drawableLeft="@drawable/ic_action_good"
+        android:layout_alignEnd="@+id/search_gridLayoutSettings"
+        android:background="@color/green_overlay" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="zeige neuste"
+        android:id="@+id/search_buttonCurrent"
+        android:drawableLeft="@drawable/ic_action_important"
+        android:background="@color/green_overlay"
+        android:layout_above="@+id/search_buttonPopular"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/search_buttonSearch"
-        android:layout_below="@+id/search_searchEditText"
-        android:checked="true"
-        android:text="Show adult videos"
-        android:textAppearance="?android:attr/textAppearanceMedium"/>
-
-    <LinearLayout
-        android:id="@+id/search_gridLayoutSettings"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/search_switchShowAdult">
-
-        <TextView
-            android:id="@+id/search_textViewYear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Year"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
-
-        <EditText
-            android:id="@+id/search_editTextYear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:inputType="number"/>
-
-    </LinearLayout>
+        android:layout_marginBottom="15dp" />
 
 </RelativeLayout>

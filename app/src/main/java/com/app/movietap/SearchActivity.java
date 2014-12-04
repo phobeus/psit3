@@ -40,6 +40,24 @@ public class SearchActivity extends BaseActivity
       }
     });
 
+      findViewById(R.id.search_buttonPopular).setOnClickListener(new View.OnClickListener()
+      {
+          @Override
+          public void onClick(View view)
+          {
+              performPopular();
+          }
+      });
+
+      findViewById(R.id.search_buttonCurrent).setOnClickListener(new View.OnClickListener()
+      {
+          @Override
+          public void onClick(View view)
+          {
+              performPopular();
+          }
+      });
+
     EditText editText = (EditText) findViewById(R.id.search_searchEditText);
     editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
       @Override
@@ -63,6 +81,25 @@ public class SearchActivity extends BaseActivity
     InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
     inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
   }
+
+    public void performPopular()
+    {
+        new PopularMovieOperation().execute();
+
+        // Hide Keyboard
+        InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+    public void performCurrent()
+    {
+        String query = ((EditText) findViewById(R.id.search_searchEditText)).getText().toString();
+        new SearchMovieOperation().execute(query);
+
+        // Hide Keyboard
+        InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
 
   @Override
   protected void onNewIntent(Intent intent)
@@ -130,4 +167,33 @@ public class SearchActivity extends BaseActivity
     {
     }
   }
+
+    private class PopularMovieOperation extends AsyncTask<String, Void, List<Movie>>
+    {
+        @Override
+        protected List<Movie> doInBackground(String... params)
+        {
+            List<Movie> result = ApiTools.popularMovies();
+
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(List<Movie> result)
+        {
+            openSearchResult(result);
+        }
+
+        @Override
+        protected void onPreExecute()
+        {
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values)
+        {
+        }
+    }
+
+
 }

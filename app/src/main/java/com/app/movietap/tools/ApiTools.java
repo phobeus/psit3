@@ -28,19 +28,34 @@ public class ApiTools
     return result != null ? result : new ArrayList<Movie>();
   }
 
-    public static List<Movie> popularMovies()
-    {
-        URIBuilder url = getBaseUriBuilder();
-        if(url == null) { return null; }
+  public static List<Movie> popularMovies()
+  {
+    URIBuilder url = getBaseUriBuilder();
+    if(url == null) { return null; }
 
-        url.setPath("/3/discover/movie?sort_by=popularity.desc");
+    url.setPath("/3/discover/movie");
+    url.addParameter("sort_by", "popularity.desc");
+    String json = UrlCacheTools.getUrl(url);
 
-        String json = UrlCacheTools.getUrl(url);
+    List<Movie> result = JsonTools.getMovies(json);
 
-        List<Movie> result = JsonTools.getMovies(json);
+    return result != null ? result : new ArrayList<Movie>();
+  }
 
-        return result != null ? result : new ArrayList<Movie>();
-    }
+  public static List<Movie> bestRatedMovies()
+  {
+    URIBuilder url = getBaseUriBuilder();
+    if(url == null) { return null; }
+
+    url.setPath("/3/discover/movie");
+    url.addParameter("certification_country", "CH");
+    url.addParameter("sort_by", "vote_average.desc");
+    String json = UrlCacheTools.getUrl(url);
+
+    List<Movie> result = JsonTools.getMovies(json);
+
+    return result != null ? result : new ArrayList<Movie>();
+  }
 
   public static Movie getMovie(int id)
   {

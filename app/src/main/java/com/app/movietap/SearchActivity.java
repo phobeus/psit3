@@ -40,30 +40,33 @@ public class SearchActivity extends BaseActivity
       }
     });
 
-      findViewById(R.id.search_buttonPopular).setOnClickListener(new View.OnClickListener()
+    findViewById(R.id.search_buttonPopular).setOnClickListener(new View.OnClickListener()
+    {
+      @Override
+      public void onClick(View view)
       {
-          @Override
-          public void onClick(View view)
-          {
-              performPopular();
-          }
-      });
+        performPopular();
+      }
+    });
 
-      findViewById(R.id.search_buttonCurrent).setOnClickListener(new View.OnClickListener()
+    findViewById(R.id.search_buttonRated).setOnClickListener(new View.OnClickListener()
+    {
+      @Override
+      public void onClick(View view)
       {
-          @Override
-          public void onClick(View view)
-          {
-              performPopular();
-          }
-      });
+        performBestRated();
+      }
+    });
 
     EditText editText = (EditText) findViewById(R.id.search_searchEditText);
-    editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+    editText.setOnEditorActionListener(new TextView.OnEditorActionListener()
+    {
       @Override
-      public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+      public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+      {
         boolean handled = false;
-        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+        if (actionId == EditorInfo.IME_ACTION_SEARCH)
+        {
           performSearch();
           handled = true;
         }
@@ -82,24 +85,23 @@ public class SearchActivity extends BaseActivity
     inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
   }
 
-    public void performPopular()
-    {
-        new PopularMovieOperation().execute();
+  public void performPopular()
+  {
+    new PopularMovieOperation().execute();
 
-        // Hide Keyboard
-        InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-    }
+    // Hide Keyboard
+    InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+    inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+  }
 
-    public void performCurrent()
-    {
-        String query = ((EditText) findViewById(R.id.search_searchEditText)).getText().toString();
-        new SearchMovieOperation().execute(query);
+  public void performBestRated()
+  {
+    new BestRatedMovieOperation().execute();
 
-        // Hide Keyboard
-        InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-    }
+    // Hide Keyboard
+    InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+    inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+  }
 
   @Override
   protected void onNewIntent(Intent intent)
@@ -137,7 +139,7 @@ public class SearchActivity extends BaseActivity
   private void openSearchResult(List<Movie> movies)
   {
     Intent intent = new Intent(SearchActivity.this, SearchResultActivity.class);
-    intent.putParcelableArrayListExtra("searchresult", (ArrayList)movies);
+    intent.putParcelableArrayListExtra("searchresult", (ArrayList) movies);
     startActivity(intent);
   }
 
@@ -168,32 +170,58 @@ public class SearchActivity extends BaseActivity
     }
   }
 
-    private class PopularMovieOperation extends AsyncTask<String, Void, List<Movie>>
+  private class PopularMovieOperation extends AsyncTask<String, Void, List<Movie>>
+  {
+    @Override
+    protected List<Movie> doInBackground(String... params)
     {
-        @Override
-        protected List<Movie> doInBackground(String... params)
-        {
-            List<Movie> result = ApiTools.popularMovies();
+      List<Movie> result = ApiTools.popularMovies();
 
-            return result;
-        }
-
-        @Override
-        protected void onPostExecute(List<Movie> result)
-        {
-            openSearchResult(result);
-        }
-
-        @Override
-        protected void onPreExecute()
-        {
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values)
-        {
-        }
+      return result;
     }
 
+    @Override
+    protected void onPostExecute(List<Movie> result)
+    {
+      openSearchResult(result);
+    }
+
+    @Override
+    protected void onPreExecute()
+    {
+    }
+
+    @Override
+    protected void onProgressUpdate(Void... values)
+    {
+    }
+  }
+
+  private class BestRatedMovieOperation extends AsyncTask<String, Void, List<Movie>>
+  {
+    @Override
+    protected List<Movie> doInBackground(String... params)
+    {
+      List<Movie> result = ApiTools.bestRatedMovies();
+
+      return result;
+    }
+
+    @Override
+    protected void onPostExecute(List<Movie> result)
+    {
+      openSearchResult(result);
+    }
+
+    @Override
+    protected void onPreExecute()
+    {
+    }
+
+    @Override
+    protected void onProgressUpdate(Void... values)
+    {
+    }
+  }
 
 }

@@ -46,60 +46,75 @@ public class MovieDetailActivity extends BaseActivity
     _aQuery = new AQuery(this);
     _aQuery.id(R.id.movieDetail_imageViewPoster).image("http://image.tmdb.org/t/p/w500" + _movie.getPoster()); /*sizes are 500 or 780*/
 
-      //check if movie exists in Wishlist
-      PersistenceHandler handler = new PersistenceHandler(this);
-      Object result = handler.loadWhere(StoredMovie.class, "Status = 0 AND MovieId = ? ", new String[]{_movie.getId() + ""}, null, null, null);
-      if (result != null) {
-          _storedMovie = (StoredMovie) result;
-          //change Image, to see that move is stored
-          ((Button) findViewById(R.id.movieDetail_buttonRemember)).setCompoundDrawablesWithIntrinsicBounds(drawableRememberAdded, null, null, null);
+    //check if movie exists in Wishlist
+    PersistenceHandler handler = new PersistenceHandler(this);
+    Object result = handler.loadWhere(StoredMovie.class, "MovieId = ? ", new String[]{_movie.getId() + ""}, null, null, null);
+    if (result != null)
+    {
+      _storedMovie = (StoredMovie) result;
+      //change Image, to see that move is stored
+      if (_storedMovie.Status == MovieStatus.Seen)
+      {
+        ((Button) findViewById(R.id.movieDetail_buttonRemember)).setCompoundDrawablesWithIntrinsicBounds(drawableRememberAdded, null, null, null);
+      } else if (_storedMovie.Status == MovieStatus.WantToSee)
+      {
+        ((Button) findViewById(R.id.movieDetail_buttonWish)).setCompoundDrawablesWithIntrinsicBounds(drawableWishAdded, null, null, null);
       }
+    }
 
-      //check if movie exists in Wishlist
-      result = handler.loadWhere(StoredMovie.class, "Status = 1 AND MovieId = ?", new String[]{_movie.getId() + ""}, null, null, null);
-      if (result != null) {
-          _storedMovie = (StoredMovie) result;
-          //change Image, to see that move is stored
-          ((Button) findViewById(R.id.movieDetail_buttonWish)).setCompoundDrawablesWithIntrinsicBounds(drawableWishAdded, null, null, null);
-      }
-      
+
     //handle the adding or removing of movies from a list via the detail view
-      
-      Button rememberButton = (Button) findViewById(R.id.movieDetail_buttonRemember);
-      rememberButton.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-              PersistenceHandler handler = new PersistenceHandler(MovieDetailActivity.this);
-              if (_storedMovie != null) {
-                  handler.deleteWhere(StoredMovie.class, "Id = ?", new String[]{_storedMovie.Id + ""});
-                  ((Button) findViewById(R.id.movieDetail_buttonRemember)).setCompoundDrawablesWithIntrinsicBounds(drawableRemember, null, null, null);
-              } else {
-                  _storedMovie = new StoredMovie(_movie);
-                  _storedMovie.Status = MovieStatus.Seen;
-                  _storedMovie.Shared = MovieSharedStatus.WithNobody;
-                  _storedMovie.Id = handler.save(_storedMovie);
-                  ((Button) findViewById(R.id.movieDetail_buttonRemember)).setCompoundDrawablesWithIntrinsicBounds(drawableRememberAdded, null, null, null);
-              }
+    Button rememberButton = (Button) findViewById(R.id.movieDetail_buttonRemember);
+    rememberButton.setOnClickListener(new View.OnClickListener()
+    {
+      @Override
+      public void onClick(View view)
+      {
+        PersistenceHandler handler = new PersistenceHandler(MovieDetailActivity.this);
+        if (_storedMovie != null)
+        {
+          if(_storedMovie.Status == MovieStatus.Seen)
+          {
+            handler.deleteWhere(StoredMovie.class, "Id = ?", new String[]{_storedMovie.Id + ""});
+            ((Button) findViewById(R.id.movieDetail_buttonRemember)).setCompoundDrawablesWithIntrinsicBounds(drawableRemember, null, null, null);
+            _storedMovie = null;
           }
-      });
+        } else
+        {
+          _storedMovie = new StoredMovie(_movie);
+          _storedMovie.Status = MovieStatus.Seen;
+          _storedMovie.Shared = MovieSharedStatus.WithNobody;
+          _storedMovie.Id = handler.save(_storedMovie);
+          ((Button) findViewById(R.id.movieDetail_buttonRemember)).setCompoundDrawablesWithIntrinsicBounds(drawableRememberAdded, null, null, null);
+        }
+      }
+    });
 
-      Button wishButton = (Button) findViewById(R.id.movieDetail_buttonWish);
-      wishButton.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-              PersistenceHandler handler = new PersistenceHandler(MovieDetailActivity.this);
-              if (_storedMovie != null) {
-                  handler.deleteWhere(StoredMovie.class, "Id = ?", new String[]{_storedMovie.Id + ""});
-                  ((Button) findViewById(R.id.movieDetail_buttonWish)).setCompoundDrawablesWithIntrinsicBounds(drawableWish, null, null, null);
-              } else {
-                  _storedMovie = new StoredMovie(_movie);
-                  _storedMovie.Status = MovieStatus.WantToSee;
-                  _storedMovie.Shared = MovieSharedStatus.WithNobody;
-                  _storedMovie.Id = handler.save(_storedMovie);
-                  ((Button) findViewById(R.id.movieDetail_buttonWish)).setCompoundDrawablesWithIntrinsicBounds(drawableWishAdded, null, null, null);
-              }
+    Button wishButton = (Button) findViewById(R.id.movieDetail_buttonWish);
+    wishButton.setOnClickListener(new View.OnClickListener()
+    {
+      @Override
+      public void onClick(View view)
+      {
+        PersistenceHandler handler = new PersistenceHandler(MovieDetailActivity.this);
+        if (_storedMovie != null)
+        {
+          if (_storedMovie.Status == MovieStatus.WantToSee)
+          {
+            handler.deleteWhere(StoredMovie.class, "Id = ?", new String[]{_storedMovie.Id + ""});
+            ((Button) findViewById(R.id.movieDetail_buttonWish)).setCompoundDrawablesWithIntrinsicBounds(drawableWish, null, null, null);
+            _storedMovie = null;
           }
-      });
+        } else
+        {
+          _storedMovie = new StoredMovie(_movie);
+          _storedMovie.Status = MovieStatus.WantToSee;
+          _storedMovie.Shared = MovieSharedStatus.WithNobody;
+          _storedMovie.Id = handler.save(_storedMovie);
+          ((Button) findViewById(R.id.movieDetail_buttonWish)).setCompoundDrawablesWithIntrinsicBounds(drawableWishAdded, null, null, null);
+        }
+      }
+    });
 
     //moreinfo of the same movie
     Movie detailedMovie = ApiTools.getMovie(_movie.getId());

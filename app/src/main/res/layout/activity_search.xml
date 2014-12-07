@@ -8,7 +8,6 @@
                 android:paddingTop="@dimen/activity_vertical_margin"
                 tools:context="com.app.movietap.SearchActivity">
 
-
     <Switch
         android:id="@+id/search_switchShowAdult"
         android:layout_width="match_parent"

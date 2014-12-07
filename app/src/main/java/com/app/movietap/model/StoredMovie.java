@@ -24,6 +24,11 @@ public class StoredMovie
   @Persistent
   public int Shared;
 
+  public StoredMovie()
+  {
+    // Needed for the creation by reflection
+  }
+
   public StoredMovie(Movie movie)
   {
     MovieId = movie.getId();

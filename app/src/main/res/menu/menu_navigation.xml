@@ -1,7 +1,4 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.app.movietap.NavigationActivity">
-
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/action_collection"
         android:title="Gemerkt"
         android:icon="@drawable/ic_library"

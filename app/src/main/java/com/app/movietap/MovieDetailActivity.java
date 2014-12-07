@@ -52,20 +52,18 @@ public class MovieDetailActivity extends BaseActivity
 
     //check if movie exists in Wishlist
     IPersistenceHandler handler = new PersistenceHandler(this);
-    Object result = handler.loadWhere(StoredMovie.class, "MovieId = ? ", new String[]{_movie.getId() + ""}, null, null, null);
-    if (result != null)
+    _storedMovie = handler.loadWhere(StoredMovie.class, "MovieId = ? ", new String[]{_movie.getId() + ""});
+    //change Image, to see that move is stored
+    if (_storedMovie != null)
     {
-      _storedMovie = (StoredMovie) result;
-      //change Image, to see that move is stored
-      if (_storedMovie.Status == MovieStatus.Seen)
+      if (_storedMovie.Status == MovieStatus.Remembered)
       {
         ((Button) findViewById(R.id.movieDetail_buttonRemember)).setCompoundDrawablesWithIntrinsicBounds(drawableRememberAdded, null, null, null);
-      } else if (_storedMovie.Status == MovieStatus.WantToSee)
+      } else if (_storedMovie.Status == MovieStatus.Wished)
       {
         ((Button) findViewById(R.id.movieDetail_buttonWish)).setCompoundDrawablesWithIntrinsicBounds(drawableWishAdded, null, null, null);
       }
     }
-
 
     //handle the adding or removing of movies from a list via the detail view
     Button rememberButton = (Button) findViewById(R.id.movieDetail_buttonRemember);
@@ -77,7 +75,7 @@ public class MovieDetailActivity extends BaseActivity
         IPersistenceHandler handler = new PersistenceHandler(MovieDetailActivity.this);
         if (_storedMovie != null)
         {
-          if (_storedMovie.Status == MovieStatus.Seen)
+          if (_storedMovie.Status == MovieStatus.Remembered)
           {
             handler.deleteWhere(StoredMovie.class, "Id = ?", new String[]{_storedMovie.Id + ""});
             ((Button) findViewById(R.id.movieDetail_buttonRemember)).setCompoundDrawablesWithIntrinsicBounds(drawableRemember, null, null, null);
@@ -86,7 +84,7 @@ public class MovieDetailActivity extends BaseActivity
         } else
         {
           _storedMovie = new StoredMovie(_movie);
-          _storedMovie.Status = MovieStatus.Seen;
+          _storedMovie.Status = MovieStatus.Remembered;
           _storedMovie.Shared = MovieSharedStatus.WithNobody;
           _storedMovie.Id = handler.save(_storedMovie);
           ((Button) findViewById(R.id.movieDetail_buttonRemember)).setCompoundDrawablesWithIntrinsicBounds(drawableRememberAdded, null, null, null);
@@ -103,7 +101,7 @@ public class MovieDetailActivity extends BaseActivity
         IPersistenceHandler handler = new PersistenceHandler(MovieDetailActivity.this);
         if (_storedMovie != null)
         {
-          if (_storedMovie.Status == MovieStatus.WantToSee)
+          if (_storedMovie.Status == MovieStatus.Wished)
           {
             handler.deleteWhere(StoredMovie.class, "Id = ?", new String[]{_storedMovie.Id + ""});
             ((Button) findViewById(R.id.movieDetail_buttonWish)).setCompoundDrawablesWithIntrinsicBounds(drawableWish, null, null, null);
@@ -112,7 +110,7 @@ public class MovieDetailActivity extends BaseActivity
         } else
         {
           _storedMovie = new StoredMovie(_movie);
-          _storedMovie.Status = MovieStatus.WantToSee;
+          _storedMovie.Status = MovieStatus.Wished;
           _storedMovie.Shared = MovieSharedStatus.WithNobody;
           _storedMovie.Id = handler.save(_storedMovie);
           ((Button) findViewById(R.id.movieDetail_buttonWish)).setCompoundDrawablesWithIntrinsicBounds(drawableWishAdded, null, null, null);

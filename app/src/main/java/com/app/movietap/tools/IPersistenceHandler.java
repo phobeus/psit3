@@ -10,11 +10,13 @@ public interface IPersistenceHandler
 {
   int save(Object object);
 
-  Object load(Cursor cursor, Class<?> cls);
+  <T> T load(Class<T> cls, Cursor cursor);
 
-  List<Object> load(Class<?> cls, String where, String[] values, String groupBy, String orderBy, String limit);
+  <T> List<T> loadListWhere(Class<T> cls, String where, String[] values, String groupBy, String orderBy, String limit);
 
-  Object loadWhere(Class<?> cls, String where, String[] values, String groupBy, String orderBy, String limit);
+  <T> T loadWhere(Class<T> cls, String where, String[] values);
+
+  <T> T loadWhere(Class<T> cls, String where, String[] values, String groupBy, String orderBy, String limit);
 
   void deleteWhere(Class<?> cls, String where, String[] values);
 

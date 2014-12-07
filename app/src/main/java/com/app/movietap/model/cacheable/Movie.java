@@ -3,6 +3,8 @@ package com.app.movietap.model.cacheable;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.app.movietap.model.StoredMovie;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 

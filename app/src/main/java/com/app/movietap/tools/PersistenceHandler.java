@@ -16,6 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -122,7 +123,7 @@ public class PersistenceHandler extends SQLiteOpenHelper implements IPersistence
   }
 
   @Override
-  public Object load(Cursor cursor, Class<?> cls)
+  public <T> T load(Class<T> cls, Cursor cursor)
   {
     Constructor[] ctors = cls.getDeclaredConstructors();
     Constructor ctor = null;
@@ -170,11 +171,52 @@ public class PersistenceHandler extends SQLiteOpenHelper implements IPersistence
       e.printStackTrace();
     }
 
+    return convertInstanceOfObject(result, cls);
+  }
+
+  @Override
+  public <T> List<T> loadListWhere(Class<T> cls, String where, String[] values, String groupBy, String orderBy, String limit) {
+    SQLiteDatabase db = getWritableDatabase();
+    ArrayList<String> fields = new ArrayList<String>();
+    for (PersistableField f : getPersistableFields(cls))
+    {
+      fields.add(f.Name);
+    }
+
+    ArrayList<T> result = new ArrayList<T>();
+
+    Cursor cursor = db.query(cls.getSimpleName(), Arrays.copyOf(fields.toArray(), fields.size(), String[].class), where, values, groupBy, null, orderBy, limit);
+    if (cursor != null && cursor.getCount() >= 1)
+    {
+      cursor.moveToFirst();
+
+      do
+      {
+        result.add(load(cls, cursor));
+      } while(cursor.moveToNext());
+      db.close();
+    }
+
     return result;
   }
 
   @Override
-  public Object loadWhere(Class<?> cls, String where, String[] values, String groupBy, String orderBy, String limit)
+  public <T> T loadWhere(Class<T> cls, String where, String[] values)
+  {
+    Object item = loadWhere(cls, where, values, null, null, null);
+
+    return convertInstanceOfObject(item, cls);
+  }
+
+  private static <T> T convertInstanceOfObject(Object o, Class<T> clazz) {
+    try {
+      return clazz.cast(o);
+    } catch(ClassCastException e) {
+      return null;
+    }
+  }
+
+  public <T> T loadWhere(Class<T> cls, String where, String[] values, String groupBy, String orderBy, String limit)
   {
     SQLiteDatabase db = getWritableDatabase();
     ArrayList<String> fields = new ArrayList<String>();
@@ -187,10 +229,10 @@ public class PersistenceHandler extends SQLiteOpenHelper implements IPersistence
     if (cursor != null && cursor.getCount() == 1)
     {
       cursor.moveToFirst();
-      Object loadedObject = load(cursor, cls);
+      Object loadedObject = load(cls, cursor);
       db.close();
 
-      return loadedObject;
+      return convertInstanceOfObject(loadedObject, cls);
     }
 
     return null;
@@ -219,7 +261,7 @@ public class PersistenceHandler extends SQLiteOpenHelper implements IPersistence
     if (cursor != null && cursor.getCount() == 1)
     {
       cursor.moveToFirst();
-      Object result = load(cursor, User.class);
+      Object result = load(User.class, cursor);
       user = (User) result;
     } else
     {

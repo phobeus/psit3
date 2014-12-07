@@ -28,8 +28,20 @@
             android:defaultValue="false" />
         </PreferenceCategory>
     <PreferenceCategory
-        android:title="Danke an...">
-        <EditTextPreference
-            android:title="This product uses the TMDb API but is not endorsed or certified by TMDb."/>
-        </PreferenceCategory>
+        android:title="Danke an">
+        <Preference android:title="themoviedb.org"
+                    android:summary="This product uses the TMDb API but is not endorsed or certified by TMDb."/>
+        <Preference android:title="parse.com"
+                    android:summary="https://parse.com/"/>
+        <Preference android:title="aquery.com"
+                    android:summary="https://code.google.com/p/android-query/"/>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Über diese app">
+        <Preference android:title="Autoren"
+                    android:summary="Pascal Stählin\nMarcel Röösli\nAndreas Plüss"/>
+        <Preference android:title="Version 0.1" />
+        <Preference android:title="Im Auftrag von ZHAW PSIT3" />
+        <Preference android:title="Lizenz: Apache License v2" />
+    </PreferenceCategory>
 </PreferenceScreen>

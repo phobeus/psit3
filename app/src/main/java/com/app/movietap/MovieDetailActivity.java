@@ -2,19 +2,18 @@ package com.app.movietap;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.androidquery.AQuery;
-import com.app.movietap.model.Movie;
-import com.app.movietap.model.MovieStatus;
-import com.app.movietap.model.database.MovieSharedStatus;
-import com.app.movietap.model.database.StoredMovie;
+import com.app.movietap.model.cacheable.Movie;
+import com.app.movietap.model.cacheable.MovieStatus;
+import com.app.movietap.model.MovieSharedStatus;
+import com.app.movietap.model.StoredMovie;
 import com.app.movietap.tools.ActivityTools;
 import com.app.movietap.tools.ApiTools;
+import com.app.movietap.tools.IPersistenceHandler;
 import com.app.movietap.tools.PersistenceHandler;
 
 import org.apache.commons.lang3.StringUtils;
@@ -52,7 +51,7 @@ public class MovieDetailActivity extends BaseActivity
     _aQuery.id(R.id.movieDetail_imageViewPoster).image("http://image.tmdb.org/t/p/w500" + _movie.getPoster()); /*sizes are 500 or 780*/
 
     //check if movie exists in Wishlist
-    PersistenceHandler handler = new PersistenceHandler(this);
+    IPersistenceHandler handler = new PersistenceHandler(this);
     Object result = handler.loadWhere(StoredMovie.class, "MovieId = ? ", new String[]{_movie.getId() + ""}, null, null, null);
     if (result != null)
     {
@@ -75,7 +74,7 @@ public class MovieDetailActivity extends BaseActivity
       @Override
       public void onClick(View view)
       {
-        PersistenceHandler handler = new PersistenceHandler(MovieDetailActivity.this);
+        IPersistenceHandler handler = new PersistenceHandler(MovieDetailActivity.this);
         if (_storedMovie != null)
         {
           if (_storedMovie.Status == MovieStatus.Seen)
@@ -101,7 +100,7 @@ public class MovieDetailActivity extends BaseActivity
       @Override
       public void onClick(View view)
       {
-        PersistenceHandler handler = new PersistenceHandler(MovieDetailActivity.this);
+        IPersistenceHandler handler = new PersistenceHandler(MovieDetailActivity.this);
         if (_storedMovie != null)
         {
           if (_storedMovie.Status == MovieStatus.WantToSee)

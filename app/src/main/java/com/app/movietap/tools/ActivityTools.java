@@ -5,11 +5,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 
+import com.app.movietap.MovieDetailActivity;
 import com.app.movietap.R;
+import com.app.movietap.model.cacheable.Movie;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class ActivityTools
 {
@@ -66,7 +71,7 @@ public class ActivityTools
     return createActivity("com.app.movietap.NavigationActivity", applicationContext);
   }
 
-    public static String fomateDate(Date d)
+  public static String fomateDate(Date d)
     {
         SimpleDateFormat dt = new SimpleDateFormat("dd.M.yyyy");
         return dt.format(d);

@@ -12,8 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.app.movietap.model.database.User;
+import com.app.movietap.model.User;
 import com.app.movietap.tools.ActivityTools;
+import com.app.movietap.tools.IPersistenceHandler;
 import com.app.movietap.tools.PersistenceHandler;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
@@ -132,7 +133,7 @@ public class LoginActivity extends Activity
   public void getOrCreateLocalUser()
   {
     String uid = Settings.Secure.getString(this.getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
-    PersistenceHandler handler = new PersistenceHandler(this);
+    IPersistenceHandler handler = new PersistenceHandler(this);
     User user = handler.getOrCreateLocalUser(uid);
   }
 

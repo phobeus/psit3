@@ -1,4 +1,6 @@
-package com.app.movietap.model.database;
+package com.app.movietap.model;
+
+import com.app.movietap.model.database.Persistent;
 
 @Persistent
 public class Rating

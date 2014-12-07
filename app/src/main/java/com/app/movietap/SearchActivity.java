@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.app.movietap.model.Movie;
+import com.app.movietap.model.cacheable.Movie;
 import com.app.movietap.tools.ApiTools;
 
 import java.util.ArrayList;

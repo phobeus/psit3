@@ -1,4 +1,4 @@
-package com.app.movietap.model;
+package com.app.movietap.model.cacheable;
 
 public class MovieStatus
 {

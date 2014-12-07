@@ -1,4 +1,4 @@
-package com.app.movietap.model.database;
+package com.app.movietap.model;
 
 public class MovieSharedStatus
 {

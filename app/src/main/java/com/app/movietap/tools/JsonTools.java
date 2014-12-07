@@ -1,6 +1,6 @@
 package com.app.movietap.tools;
 
-import com.app.movietap.model.Movie;
+import com.app.movietap.model.cacheable.Movie;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;

@@ -1,4 +1,4 @@
-package com.app.movietap.model;
+package com.app.movietap.model.cacheable;
 
 import android.os.Parcel;
 import android.os.Parcelable;

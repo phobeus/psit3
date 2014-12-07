@@ -3,7 +3,7 @@ package com.app.movietap.tools;
 import android.util.Log;
 
 import com.app.movietap.api.UrlCacheTools;
-import com.app.movietap.model.Movie;
+import com.app.movietap.model.cacheable.Movie;
 
 import org.apache.http.client.utils.URIBuilder;
 

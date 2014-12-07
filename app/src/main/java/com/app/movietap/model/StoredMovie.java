@@ -1,6 +1,7 @@
-package com.app.movietap.model.database;
+package com.app.movietap.model;
 
-import com.app.movietap.model.Movie;
+import com.app.movietap.model.cacheable.Movie;
+import com.app.movietap.model.database.Persistent;
 
 @Persistent
 public class StoredMovie
@@ -22,11 +23,6 @@ public class StoredMovie
 
   @Persistent
   public int Shared;
-
-  public StoredMovie()
-  {
-
-  }
 
   public StoredMovie(Movie movie)
   {

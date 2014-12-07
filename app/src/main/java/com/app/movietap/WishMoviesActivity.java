@@ -8,7 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
-import com.app.movietap.model.Movie;
+import com.app.movietap.model.cacheable.Movie;
 import com.app.movietap.tools.ActivityTools;
 import com.app.movietap.tools.JsonTools;
 import com.app.movietap.ui.MovieList;

@@ -2,22 +2,17 @@ package com.app.movietap;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.app.movietap.model.Movie;
-import com.app.movietap.tools.ActivityTools;
+import com.app.movietap.model.cacheable.Movie;
 import com.app.movietap.ui.MovieList;
 
 import java.util.ArrayList;
 
-
 public class SearchResultActivity extends BaseActivity
 {
-
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {

@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.app.movietap.model.Rating;
+import com.app.movietap.model.StoredMovie;
+import com.app.movietap.model.User;
 import com.app.movietap.model.database.*;
 
 import org.apache.commons.lang3.StringUtils;
@@ -17,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class PersistenceHandler extends SQLiteOpenHelper
+public class PersistenceHandler extends SQLiteOpenHelper implements IPersistenceHandler
 {
   public PersistenceHandler(Context context)
   {
@@ -73,6 +76,7 @@ public class PersistenceHandler extends SQLiteOpenHelper
     onCreate(db);
   }
 
+  @Override
   public int save(Object object)
   {
     List<PersistableField> fields = getPersistableFields(object.getClass());
@@ -117,6 +121,7 @@ public class PersistenceHandler extends SQLiteOpenHelper
     return result;
   }
 
+  @Override
   public Object load(Cursor cursor, Class<?> cls)
   {
     Constructor[] ctors = cls.getDeclaredConstructors();
@@ -168,6 +173,7 @@ public class PersistenceHandler extends SQLiteOpenHelper
     return result;
   }
 
+  @Override
   public Object loadWhere(Class<?> cls, String where, String[] values, String groupBy, String orderBy, String limit)
   {
     SQLiteDatabase db = getWritableDatabase();
@@ -190,6 +196,7 @@ public class PersistenceHandler extends SQLiteOpenHelper
     return null;
   }
 
+  @Override
   public void deleteWhere(Class<?> cls, String where, String[] values)
   {
     SQLiteDatabase db = getWritableDatabase();
@@ -197,6 +204,7 @@ public class PersistenceHandler extends SQLiteOpenHelper
     db.close();
   }
 
+  @Override
   public User getOrCreateLocalUser(String uid)
   {
     SQLiteDatabase db = this.getWritableDatabase();

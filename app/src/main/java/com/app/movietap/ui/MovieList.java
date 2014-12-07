@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.androidquery.AQuery;
 import com.app.movietap.R;
-import com.app.movietap.model.Movie;
+import com.app.movietap.model.cacheable.Movie;
 import com.app.movietap.tools.ActivityTools;
 
 import java.util.List;

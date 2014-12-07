@@ -49,46 +49,48 @@
         android:id="@+id/search_searchEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/search_gridLayoutSettings"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:hint="Filmtitel"
-        android:layout_below="@+id/search_gridLayoutSettings"
-        android:imeOptions="actionSearch"
-        android:inputType="text"
         android:layout_alignRight="@+id/search_gridLayoutSettings"
-        android:layout_alignEnd="@+id/search_gridLayoutSettings"/>
+        android:layout_below="@+id/search_gridLayoutSettings"
+        android:hint="Filmtitel"
+        android:imeOptions="actionSearch"
+        android:inputType="text">
+          <requestFocus/>
+    </EditText>
 
     <Button
         android:id="@+id/search_buttonSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Suche"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/search_searchEditText"
         android:drawableLeft="@drawable/ic_action_search"
         android:focusable="true"
-        android:layout_below="@+id/search_searchEditText"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        android:text="Suche"/>
 
     <Button
+        android:id="@+id/search_buttonPopular"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="zeige meist gesuchte"
-        android:id="@+id/search_buttonPopular"
+        android:layout_alignEnd="@+id/search_gridLayoutSettings"
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/search_gridLayoutSettings"
         android:drawableLeft="@drawable/ic_action_good"
-        android:layout_alignEnd="@+id/search_gridLayoutSettings"
+        android:text="zeige meist gesuchte"
         />
 
     <Button
+        android:id="@+id/search_buttonRated"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="zeige best bewertete"
-        android:id="@+id/search_buttonRated"
-        android:drawableLeft="@drawable/ic_action_important"
         android:layout_above="@+id/search_buttonPopular"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="15dp" />
+        android:layout_marginBottom="15dp"
+        android:drawableLeft="@drawable/ic_action_important"
+        android:text="zeige best bewertete"/>
 
 </RelativeLayout>

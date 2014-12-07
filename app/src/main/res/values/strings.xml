@@ -20,5 +20,6 @@
     <string name="general_data_title">Generelle Einstellungen</string>
     <string name="pref_user_password">Passwort</string>
     <string name="pref_user_clear_data">Benutzerdaten löschen</string>
+    <string name="pref_user_use_login">Login verwenden</string>
 
 </resources>

@@ -5,15 +5,20 @@
     <PreferenceCategory
         android:key="pref_user_storage_settings"
         android:title="@string/pref_user_data_title">
+        <CheckBoxPreference
+            android:key="pref_user_use_login"
+            android:title="@string/pref_user_use_login"
+            android:defaultValue="false" />
         <EditTextPreference
             android:key="pref_username"
             android:title="@string/pref_user_username"
-            android:defaultValue="Anonymous" />
+            android:defaultValue="Anonymous"
+            android:dependency="pref_user_use_login"/>
         <EditTextPreference
             android:key="pref_password"
             android:title="@string/pref_user_password"
             android:defaultValue="pass"
-            android:dependency="pref_save_login" />
+            android:dependency="pref_user_use_login" />
     </PreferenceCategory>
     <PreferenceCategory
         android:key="pref_general_storage_settings"
@@ -22,10 +27,6 @@
             android:key="pref_stay_logged_in"
             android:title="Eingeloggt bleiben?"
             android:defaultValue="true" />
-        <CheckBoxPreference
-            android:key="pref_save_login"
-            android:title="Passwort speichern?"
-            android:defaultValue="false" />
         <ListPreference
             android:key="pref_start_screen"
             android:title="Einstiegsseite"

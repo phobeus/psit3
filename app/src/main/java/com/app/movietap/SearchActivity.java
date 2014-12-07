@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -16,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.movietap.model.Movie;
-import com.app.movietap.tools.ActivityTools;
 import com.app.movietap.tools.ApiTools;
 
 import java.util.ArrayList;
@@ -81,8 +78,11 @@ public class SearchActivity extends BaseActivity
   {
     String query = ((EditText) findViewById(R.id.search_searchEditText)).getText().toString();
     new SearchMovieOperation().execute(query);
+    hideKeyboard();
+  }
 
-    // Hide Keyboard
+  public void hideKeyboard()
+  {
     InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
     inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
   }
@@ -90,19 +90,13 @@ public class SearchActivity extends BaseActivity
   public void performPopular()
   {
     new PopularMovieOperation().execute();
-
-    // Hide Keyboard
-    InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-    inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    hideKeyboard();
   }
 
   public void performBestRated()
   {
     new BestRatedMovieOperation().execute();
-
-    // Hide Keyboard
-    InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-    inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    hideKeyboard();
   }
 
   @Override

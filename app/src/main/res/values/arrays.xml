@@ -6,8 +6,8 @@
         <item>"Wunschliste"</item>
     </string-array>
     <string-array name="pref_start_screen_values">
-        <item>"0"</item>
-        <item>"1"</item>
-        <item>"2"</item>
+        <item>"SearchActivity"</item>
+        <item>"RememberMoviesActivity"</item>
+        <item>"WishMoviesActivity"</item>
     </string-array>
 </resources>

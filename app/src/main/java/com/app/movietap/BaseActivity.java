@@ -26,16 +26,10 @@ public abstract class BaseActivity extends Activity
   @Override
   public boolean onCreateOptionsMenu(Menu menu)
   {
-
-    // Inflate the menu; this adds items to the action bar if it is present.
     getMenuInflater().inflate(R.menu.menu_navigation, menu);
-
     return true;
   }
 
-  /**
-   * react to actionbar events by forwarding user to desired activity.
-   */
   @Override
   public boolean onOptionsItemSelected(MenuItem item)
   {

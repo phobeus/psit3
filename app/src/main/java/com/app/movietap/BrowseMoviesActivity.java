@@ -15,7 +15,6 @@ import com.app.movietap.ui.MovieList;
 
 import java.util.List;
 
-
 public class BrowseMoviesActivity extends ListActivity
 {
   @Override
@@ -44,19 +43,13 @@ public class BrowseMoviesActivity extends ListActivity
       startActivity(goToDetail);
   }
 
-
   @Override
   public boolean onCreateOptionsMenu(Menu menu)
   {
-    // Inflate the menu; this adds items to the action bar if it is present.
     getMenuInflater().inflate(R.menu.menu_navigation, menu);
     return true;
   }
 
-
-  /**
-   * react to actionbar events by forwarding user to desired activity.
-   */
   @Override
   public boolean onOptionsItemSelected(MenuItem item)
   {

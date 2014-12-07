@@ -2,6 +2,7 @@ package com.app.movietap;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -77,7 +78,7 @@ public class MovieDetailActivity extends BaseActivity
         PersistenceHandler handler = new PersistenceHandler(MovieDetailActivity.this);
         if (_storedMovie != null)
         {
-          if(_storedMovie.Status == MovieStatus.Seen)
+          if (_storedMovie.Status == MovieStatus.Seen)
           {
             handler.deleteWhere(StoredMovie.class, "Id = ?", new String[]{_storedMovie.Id + ""});
             ((Button) findViewById(R.id.movieDetail_buttonRemember)).setCompoundDrawablesWithIntrinsicBounds(drawableRemember, null, null, null);
@@ -142,23 +143,5 @@ public class MovieDetailActivity extends BaseActivity
 
     TextView rating = (TextView) findViewById(R.id.movieDetail_textViewRating);
     rating.setText(Double.toString(detailedMovie.getVoteAverage()));
-
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item)
-  {
-    // Handle action bar item clicks here. The action bar will
-    // automatically handle clicks on the Home/Up button, so long
-    // as you specify a parent activity in AndroidManifest.xml.
-    int id = item.getItemId();
-
-    //noinspection SimplifiableIfStatement
-    if (id == R.id.action_settings)
-    {
-      return true;
-    }
-
-    return super.onOptionsItemSelected(item);
   }
 }

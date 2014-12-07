@@ -1,8 +1,5 @@
 package com.app.movietap;
 
-/**
- * Created by andreas on 27.10.14.
- */
 import android.app.Application;
 import com.parse.Parse;
 

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="pref_form">
+    <PreferenceCategory
+        android:key="pref_user_storage_settings"
+        android:title="@string/pref_user_data_title">
+        <EditTextPreference
+            android:key="pref_username"
+            android:title="@string/pref_user_username"
+            android:defaultValue="Anonymous" />
+        <EditTextPreference
+            android:key="pref_password"
+            android:title="@string/pref_user_password"
+            android:defaultValue="pass"
+            android:dependency="pref_save_login" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:key="pref_general_storage_settings"
+        android:title="@string/general_data_title">
+        <CheckBoxPreference
+            android:key="pref_stay_logged_in"
+            android:title="Eingeloggt bleiben?"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="pref_save_login"
+            android:title="Passwort speichern?"
+            android:defaultValue="false" />
+        </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Danke an...">
+        <EditTextPreference
+            android:title="This product uses the TMDb API but is not endorsed or certified by TMDb."/>
+        </PreferenceCategory>
+</PreferenceScreen>

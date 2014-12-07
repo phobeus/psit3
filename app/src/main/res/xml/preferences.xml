@@ -26,6 +26,12 @@
             android:key="pref_save_login"
             android:title="Passwort speichern?"
             android:defaultValue="false" />
+        <ListPreference
+            android:key="pref_start_screen"
+            android:title="Einstiegsseite"
+            android:entries="@array/pref_start_screen_entries"
+            android:entryValues="@array/pref_start_screen_values"
+            android:defaultValue="0" />
         </PreferenceCategory>
     <PreferenceCategory
         android:title="Danke an">

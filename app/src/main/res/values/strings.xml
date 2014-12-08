@@ -15,7 +15,7 @@
     <string name="title_activity_movie_detail">Filmdetails</string>
     <string name="title_activity_search_result">Suchergebnisse</string>
     <string name="title_activity_settings">Einstellungen</string>
-    <string name="pref_user_data_title">Du bist...</string>
+    <string name="pref_user_data_title">Login</string>
     <string name="pref_user_username">Username</string>
     <string name="general_data_title">Generelle Einstellungen</string>
     <string name="pref_user_password">Passwort</string>

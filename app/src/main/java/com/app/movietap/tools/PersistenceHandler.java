@@ -96,6 +96,9 @@ public class PersistenceHandler extends SQLiteOpenHelper implements IPersistence
           } else if (value instanceof Double)
           {
             values.put(f.Name, (Double) value);
+          } else if (value instanceof Long)
+          {
+            values.put(f.Name, (Long) value);
           }
         } catch (IllegalAccessException e)
         {

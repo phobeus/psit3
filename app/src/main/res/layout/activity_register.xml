@@ -64,12 +64,12 @@
         android:layout_height="wrap_content"
         android:text="Registrieren"
         android:id="@+id/submitRegisterButton"
-        android:background="@color/green_overlay"
-        android:singleLine="true"
+        android:background="@drawable/mt_button_green"
+        android:singleLine="false"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"/>
-
-
+        android:layout_alignParentEnd="true"
+        android:layout_margin="5dp"
+        android:shadowColor="@color/green_overlay"/>
 
 </RelativeLayout>

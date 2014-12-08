@@ -53,7 +53,9 @@
         android:id="@+id/buttonLoginLogin"
         android:layout_below="@+id/editTextPasswordLogin"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_margin="5dp"
+        android:background="@drawable/mt_button"/>
 
     <Button
         android:layout_width="match_parent"
@@ -62,17 +64,23 @@
         android:id="@+id/buttonNoLogin"
         android:layout_below="@+id/buttonLoginLogin"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:background="@drawable/mt_button"
+        android:layout_margin="5dp"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Registrieren  〉"
         android:id="@+id/buttonGotoRegisterLogin"
-        android:background="@color/green_overlay"
+        android:background="@drawable/mt_button_green"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_margin="5dp"
+        android:singleLine="false"
+        android:shadowRadius="12"
+        android:shadowColor="@color/gray_overlay"/>
 
 
 </RelativeLayout>

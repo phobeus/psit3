@@ -160,16 +160,21 @@
         android:layout_below="@+id/textViewTitleRating"/>
 
     <Button
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Trailer"
         android:id="@+id/movieDetail_buttonTrailer"
         android:layout_below="@+id/movieDetail_imageViewPoster"
-        android:layout_alignRight="@+id/movieDetail_textViewSubtitle"
-        android:layout_alignEnd="@+id/movieDetail_textViewSubtitle"
-        android:drawableLeft="@drawable/ic_action_video"
+        android:drawableLeft="@drawable/ic_youtube"
         android:layout_marginTop="15dp"
-        android:layout_marginBottom="5dp"/>
+        android:layout_marginBottom="5dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="80dp"
+        android:background="@drawable/mt_button"/>
 
 </RelativeLayout>
 </ScrollView>

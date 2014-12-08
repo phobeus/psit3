@@ -165,7 +165,7 @@ public class MovieDetailActivity extends BaseActivity
     //handle click on Trailer Button
     Button trailerButton = (Button) findViewById(R.id.movieDetail_buttonTrailer);
     final String trailer = detailedMovie.getYoutubeId();
-    trailerButton.setText((trailer != null && StringUtils.isNotEmpty(trailer)) ? "YouTube Trailer ansehen" : "Kein Trailer verfügbar");
+    trailerButton.setText((trailer != null && StringUtils.isNotEmpty(trailer)) ? "YouTube Trailer" : "Kein Trailer vorhanden");
 
     trailerButton.setOnClickListener(new View.OnClickListener()
     {

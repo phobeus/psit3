@@ -159,6 +159,15 @@ public class Movie implements Parcelable
           }
       }
   }
+  public String getYoutubeId()
+  {
+    return _youtubeId;
+  }
+
+  public void setYoutubeId(String youtubeIds)
+  {
+    _youtubeId = youtubeIds;
+  }
 
   public void setOverview (String overview)
   {
@@ -191,4 +200,8 @@ public class Movie implements Parcelable
   private String _overview; //short description
   private String _tagline;  //subtitle
   private String _productionCompanies;
+
+
+
+  private String _youtubeId;
 }

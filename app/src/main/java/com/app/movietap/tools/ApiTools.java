@@ -7,6 +7,8 @@ import com.app.movietap.api.UrlCacheTools;
 import com.app.movietap.model.cacheable.Movie;
 
 import org.apache.http.client.utils.URIBuilder;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -50,7 +52,7 @@ public class ApiTools
 
     url.setPath("/3/discover/movie");
     url.addParameter("certification_country", "CH");
-    url.addParameter("sort_by", "vote_average.desc");
+    url.addParameter("sort_by", "vote_count.desc");
     String json = UrlCacheTools.getUrl(context, url);
 
     List<Movie> result = JsonTools.getMovies(json);
@@ -60,15 +62,33 @@ public class ApiTools
 
   public static Movie getMovie(Context context, int id)
   {
-      URIBuilder url = getBaseUriBuilder();
-      if(url == null) { return null; }
+    URIBuilder url = getBaseUriBuilder();
+    if(url == null) { return null; }
 
-      url.setPath("/3/movie/" + id);
+    url.setPath("/3/movie/" + id);
+    String jsonMovie = UrlCacheTools.getUrl(context, url);
+    Movie movie = JsonTools.getMovie(jsonMovie);
+    addTrailer(context, id, movie);
 
-      String json = UrlCacheTools.getUrl(context, url);
-
-      return JsonTools.getMovie(json);
+    return movie;
   }
+
+  public static void addTrailer(Context context, int id, Movie movie)
+  {
+    URIBuilder url = getBaseUriBuilder();
+    if(url != null)
+    {
+      //add youtube trailer if exists
+      url.setPath("/3/movie/" + id + "/videos");
+      String jsonMovie = UrlCacheTools.getUrl(context, url);
+      String trailer = JsonTools.getTrailer(jsonMovie);
+      if (trailer != null)
+      {
+        movie.setYoutubeId(trailer);
+      }
+    }
+  }
+
 
   private static URIBuilder getBaseUriBuilder()
   {

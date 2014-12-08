@@ -1,6 +1,8 @@
 package com.app.movietap;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +19,7 @@ import com.app.movietap.tools.IPersistenceHandler;
 import com.app.movietap.tools.PersistenceHandler;
 
 import org.apache.commons.lang3.StringUtils;
+import org.json.JSONException;
 
 import java.util.Date;
 
@@ -118,6 +121,7 @@ public class MovieDetailActivity extends BaseActivity
       }
     });
 
+
     //moreinfo of the same movie
     Movie detailedMovie = ApiTools.getMovie(this, _movie.getId());
 
@@ -157,5 +161,25 @@ public class MovieDetailActivity extends BaseActivity
     {
       ratingTextView.setText("Noch keine Bewertungen");
     }
+
+    //handle click on Trailer Button
+    Button trailerButton = (Button) findViewById(R.id.movieDetail_buttonTrailer);
+    final String trailer = detailedMovie.getYoutubeId();
+    trailerButton.setText((trailer != null && StringUtils.isNotEmpty(trailer)) ? "YouTube Trailer ansehen" : "Kein Trailer verfügbar");
+
+    trailerButton.setOnClickListener(new View.OnClickListener()
+    {
+      @Override
+      public void onClick(View view)
+      {
+        //Intent takeUserRegistration = new Intent(LoginActivity.this, RegisterActivity.class);
+        //startActivity(takeUserRegistration);
+        if(trailer != null && StringUtils.isNotEmpty(trailer))
+        {
+          startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=" + trailer)));
+        }
+      }
+    });
+
   }
 }

@@ -47,17 +47,21 @@ public class WishMoviesActivity extends BaseActivity
   {
     super.onResume();
 
-    IPersistenceHandler handler = new PersistenceHandler(this);
-    List<StoredMovie> movies = handler.loadListWhere(StoredMovie.class, "Status == ?", new String[]{MovieStatus.Wished + ""}, null, null, null);
-    _movies = new ArrayList<Movie>(movies.size());
-
-    for (StoredMovie movie : movies)
+    if (_moviesAdded == 0)
     {
-      new GetMovieOperation().execute(movie.MovieId + "");
-    }
+      IPersistenceHandler handler = new PersistenceHandler(this);
+      List<StoredMovie> movies = handler.loadListWhere(StoredMovie.class, "Status == ?", new String[]{MovieStatus.Wished + ""}, null, null, null);
+      _movies = new ArrayList<Movie>(movies.size());
 
-    MovieList adapter = new MovieList(WishMoviesActivity.this, _movies);
-    _resultList.setAdapter(adapter);
+      for (StoredMovie movie : movies)
+      {
+        synchronized (this)
+        {
+          _moviesAdded++;
+        }
+        new GetMovieOperation().execute(movie.MovieId + "");
+      }
+    }
   }
 
   private class GetMovieOperation extends AsyncTask<String, Void, Movie>
@@ -90,9 +94,19 @@ public class WishMoviesActivity extends BaseActivity
   private void addToList(Movie result)
   {
     _movies.add(result);
+    synchronized (this)
+    {
+      _moviesAdded--;
+    }
 
-    MovieList adapter = new MovieList(WishMoviesActivity.this, _movies);
-    _resultList.setAdapter(adapter);
+    if (_moviesAdded == 0)
+    {
+      synchronized (this)
+      {
+        MovieList adapter = new MovieList(WishMoviesActivity.this, _movies);
+        _resultList.setAdapter(adapter);
+      }
+    }
   }
 
   @Override
@@ -110,6 +124,7 @@ public class WishMoviesActivity extends BaseActivity
     return ActivityTools.HandleOptionsItemSelected(item, this);
   }
 
+  private int _moviesAdded;
   private List<Movie> _movies;
   private ListView _resultList;
 }

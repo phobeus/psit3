@@ -74,8 +74,22 @@ public class JsonTools
         Movie returnMovie = new Movie(id, adult, backdrop, title, originalTitle, releaseDate, poster, popularity, voteAverage, voteCount);
 
         // TODO: Add additional parameters here, be careful, not every json string has those!
-        if(movieObject.has("tagline")) { returnMovie.setTagline(movieObject.getString("tagline")); }
-        if(movieObject.has("overview")) { returnMovie.setOverview(movieObject.getString("overview")); }
+        if(movieObject.has("tagline"))
+        {
+          String tagline = movieObject.getString("tagline");
+          if(tagline != null && !tagline.equals("null"))
+          {
+            returnMovie.setTagline(tagline);
+          }
+        }
+        if(movieObject.has("overview"))
+        {
+          String overview = movieObject.getString("overview");
+          if(overview != null && !overview.equals("null"))
+          {
+            returnMovie.setOverview(overview);
+          }
+        }
         if(movieObject.has("genres")) {
             JSONArray genreArray = movieObject.getJSONArray("genres");
             returnMovie.setGenres(genreArray);

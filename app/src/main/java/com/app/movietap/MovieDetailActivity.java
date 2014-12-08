@@ -122,23 +122,40 @@ public class MovieDetailActivity extends BaseActivity
     Movie detailedMovie = ApiTools.getMovie(this, _movie.getId());
 
     //set new stuff from more detailedMovie
-    TextView genres = (TextView) findViewById(R.id.movieDetail_textViewGenre);
-    genres.setText(detailedMovie.getGenres());
+    TextView genresTextView = (TextView) findViewById(R.id.movieDetail_textViewGenre);
+    String genres = detailedMovie.getGenres();
+    genresTextView.setText((genres != null && StringUtils.isNotEmpty(genres)) ? genres : "Keine Genres verfügbar");
 
     TextView description = (TextView) findViewById(R.id.movieDetail_textViewDescription);
-    description.setText(detailedMovie.getOverview());
+    String overview = detailedMovie.getOverview();
+    description.setText((overview != null && StringUtils.isNotEmpty(overview)) ? overview : "Keine Beschreibung verfügbar");
 
     TextView subtitle = (TextView) findViewById(R.id.movieDetail_textViewSubtitle);
-    subtitle.setText(detailedMovie.getTagline());
+    String tagline = detailedMovie.getTagline();
+    if (tagline != null && StringUtils.isNotEmpty(tagline))
+    {
+      subtitle.setVisibility(View.VISIBLE);
+      subtitle.setText(tagline);
+    } else
+    {
+      subtitle.setVisibility(View.GONE);
+    }
 
     TextView production = (TextView) findViewById(R.id.movieDetail_textViewProduction);
-    production.setText(detailedMovie.getProductionCompanies());
+    String productionCompanies = detailedMovie.getProductionCompanies();
+    production.setText((productionCompanies != null && StringUtils.isNotEmpty(productionCompanies)) ? productionCompanies : "Keine Produktionsfirmen verfügbar");
 
     TextView release = (TextView) findViewById(R.id.movieDetail_textViewReleased);
     Date releaseDate = detailedMovie.getReleaseDate();
-    release.setText(releaseDate != null ? ActivityTools.fomateDate(releaseDate) : StringUtils.EMPTY);
+    release.setText((releaseDate != null) ? ActivityTools.fomateDate(releaseDate) : "Kein Erscheinungsdatum verfügbar");
 
-    TextView rating = (TextView) findViewById(R.id.movieDetail_textViewRating);
-    rating.setText(Double.toString(detailedMovie.getVoteAverage()));
+    TextView ratingTextView = (TextView) findViewById(R.id.movieDetail_textViewRating);
+    if (detailedMovie.getVoteCount() > 0)
+    {
+      ratingTextView.setText("Bewertung: " + detailedMovie.getVoteAverage() + " (von " + detailedMovie.getVoteCount() + " Benutzern)");
+    } else
+    {
+      ratingTextView.setText("Noch keine Bewertungen");
+    }
   }
 }

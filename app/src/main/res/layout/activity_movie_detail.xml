@@ -17,8 +17,8 @@
         android:id="@+id/movieDetail_buttonRemember"
         android:drawableLeft="@drawable/ic_library"
         android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/movieDetail_textViewTitle"
-        android:layout_alignEnd="@+id/movieDetail_textViewTitle"
+        android:layout_toLeftOf="@+id/movieDetail_buttonWish"
+        android:layout_toStartOf="@+id/movieDetail_buttonWish"
         android:background="@color/white" />
 
     <Button
@@ -28,8 +28,8 @@
         android:id="@+id/movieDetail_buttonWish"
         android:drawableLeft="@drawable/ic_gift"
         android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/movieDetail_buttonRemember"
-        android:layout_toStartOf="@+id/movieDetail_buttonRemember"
+        android:layout_alignRight="@+id/movieDetail_textViewTitle"
+        android:layout_alignEnd="@+id/movieDetail_textViewTitle"
         android:background="@color/white" />
 
     <TextView

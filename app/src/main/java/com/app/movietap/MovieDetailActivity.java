@@ -119,7 +119,7 @@ public class MovieDetailActivity extends BaseActivity
     });
 
     //moreinfo of the same movie
-    Movie detailedMovie = ApiTools.getMovie(_movie.getId());
+    Movie detailedMovie = ApiTools.getMovie(this, _movie.getId());
 
     //set new stuff from more detailedMovie
     TextView genres = (TextView) findViewById(R.id.movieDetail_textViewGenre);

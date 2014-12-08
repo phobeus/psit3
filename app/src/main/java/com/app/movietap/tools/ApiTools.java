@@ -1,5 +1,6 @@
 package com.app.movietap.tools;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.app.movietap.api.UrlCacheTools;
@@ -13,7 +14,7 @@ import java.util.List;
 
 public class ApiTools
 {
-  public static List<Movie> searchMovies(String query)
+  public static List<Movie> searchMovies(Context context, String query)
   {
     URIBuilder url = getBaseUriBuilder();
     if(url == null) { return null; }
@@ -21,28 +22,28 @@ public class ApiTools
     url.setPath("/3/search/movie");
     url.addParameter("query", query);
 
-    String json = UrlCacheTools.getUrl(url);
+    String json = UrlCacheTools.getUrl(context, url);
 
     List<Movie> result = JsonTools.getMovies(json);
 
     return result != null ? result : new ArrayList<Movie>();
   }
 
-  public static List<Movie> popularMovies()
+  public static List<Movie> popularMovies(Context context)
   {
     URIBuilder url = getBaseUriBuilder();
     if(url == null) { return null; }
 
     url.setPath("/3/discover/movie");
     url.addParameter("sort_by", "popularity.desc");
-    String json = UrlCacheTools.getUrl(url);
+    String json = UrlCacheTools.getUrl(context, url);
 
     List<Movie> result = JsonTools.getMovies(json);
 
     return result != null ? result : new ArrayList<Movie>();
   }
 
-  public static List<Movie> bestRatedMovies()
+  public static List<Movie> bestRatedMovies(Context context)
   {
     URIBuilder url = getBaseUriBuilder();
     if(url == null) { return null; }
@@ -50,21 +51,21 @@ public class ApiTools
     url.setPath("/3/discover/movie");
     url.addParameter("certification_country", "CH");
     url.addParameter("sort_by", "vote_average.desc");
-    String json = UrlCacheTools.getUrl(url);
+    String json = UrlCacheTools.getUrl(context, url);
 
     List<Movie> result = JsonTools.getMovies(json);
 
     return result != null ? result : new ArrayList<Movie>();
   }
 
-  public static Movie getMovie(int id)
+  public static Movie getMovie(Context context, int id)
   {
       URIBuilder url = getBaseUriBuilder();
       if(url == null) { return null; }
 
       url.setPath("/3/movie/" + id);
 
-      String json = UrlCacheTools.getUrl(url);
+      String json = UrlCacheTools.getUrl(context, url);
 
       return JsonTools.getMovie(json);
   }

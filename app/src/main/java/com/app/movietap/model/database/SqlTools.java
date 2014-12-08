@@ -4,7 +4,7 @@ public class SqlTools
 {
   public static String getSqlType(Class<?> type)
   {
-    if (Integer.class.isAssignableFrom(type) || int.class.isAssignableFrom(type))
+    if (Integer.class.isAssignableFrom(type) || int.class.isAssignableFrom(type) || long.class.isAssignableFrom(type) || Long.class.isAssignableFrom(type))
     {
       return "INTEGER";
     }
@@ -39,6 +39,10 @@ public class SqlTools
     if (field.isAssignableFrom(Float.class) || field.isAssignableFrom(float.class))
     {
       return Float.class;
+    }
+    if (field.isAssignableFrom(Long.class) || field.isAssignableFrom(long.class))
+    {
+      return Long.class;
     }
 
     return String.class;

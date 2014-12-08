@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.app.movietap.model.Rating;
 import com.app.movietap.model.StoredMovie;
+import com.app.movietap.model.UrlCache;
 import com.app.movietap.model.User;
 import com.app.movietap.model.database.*;
 
@@ -17,6 +18,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -35,39 +37,29 @@ public class PersistenceHandler extends SQLiteOpenHelper implements IPersistence
 
     for (PersistableClass cls : classes)
     {
-      StringBuilder sqlBuilder = new StringBuilder();
-
-      sqlBuilder.append("CREATE TABLE ");
-      sqlBuilder.append(cls.Name);
-      sqlBuilder.append(" ( ");
-
-      for (int i = 0; i < cls.Fields.size(); i++)
-      {
-        PersistableField field = cls.Fields.get(i);
-        sqlBuilder.append(field.Name);
-        sqlBuilder.append(" ");
-        sqlBuilder.append(SqlTools.getSqlType(field.Type));
-        if (field.IsPrimary)
-        {
-          sqlBuilder.append(" PRIMARY KEY AUTOINCREMENT");
-        }
-        if (i + 1 < cls.Fields.size())
-        {
-          sqlBuilder.append(", ");
-        }
-      }
-
-      sqlBuilder.append(" );");
-
-      String sqlCommand = sqlBuilder.toString();
-
-      db.execSQL(sqlCommand);
+      createTableForClass(db, cls);
     }
   }
 
   @Override
   public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
   {
+    if (oldVersion >= 6 && newVersion <= 8)
+    {
+      List<PersistableClass> classes = getPersistableClasses();
+
+      for (PersistableClass cls : classes)
+      {
+        if (cls.Name.equals("UrlCache"))
+        {
+          db.execSQL("DROP TABLE IF EXISTS " + cls.Name);
+          createTableForClass(db, cls);
+
+          return;
+        }
+      }
+    }
+
     List<PersistableClass> classes = this.getPersistableClasses();
     for (PersistableClass cls : classes)
     {
@@ -116,7 +108,7 @@ public class PersistenceHandler extends SQLiteOpenHelper implements IPersistence
     }
 
     SQLiteDatabase db = this.getWritableDatabase();
-    int result = (int)db.insert(object.getClass().getSimpleName(), null, values);
+    int result = (int) db.insert(object.getClass().getSimpleName(), null, values);
     db.close();
 
     return result;
@@ -154,6 +146,9 @@ public class PersistenceHandler extends SQLiteOpenHelper implements IPersistence
         } else if (sqlType.equals(Float.class))
         {
           value = cursor.getFloat(columnIndex);
+        } else if (sqlType.equals(Long.class))
+        {
+          value = cursor.getLong(columnIndex);
         } else
         {
           value = cursor.getString(columnIndex);
@@ -175,7 +170,8 @@ public class PersistenceHandler extends SQLiteOpenHelper implements IPersistence
   }
 
   @Override
-  public <T> List<T> loadListWhere(Class<T> cls, String where, String[] values, String groupBy, String orderBy, String limit) {
+  public <T> List<T> loadListWhere(Class<T> cls, String where, String[] values, String groupBy, String orderBy, String limit)
+  {
     SQLiteDatabase db = getWritableDatabase();
     ArrayList<String> fields = new ArrayList<String>();
     for (PersistableField f : getPersistableFields(cls))
@@ -193,7 +189,7 @@ public class PersistenceHandler extends SQLiteOpenHelper implements IPersistence
       do
       {
         result.add(load(cls, cursor));
-      } while(cursor.moveToNext());
+      } while (cursor.moveToNext());
       db.close();
     }
 
@@ -208,10 +204,13 @@ public class PersistenceHandler extends SQLiteOpenHelper implements IPersistence
     return convertInstanceOfObject(item, cls);
   }
 
-  private static <T> T convertInstanceOfObject(Object o, Class<T> clazz) {
-    try {
+  private static <T> T convertInstanceOfObject(Object o, Class<T> clazz)
+  {
+    try
+    {
       return clazz.cast(o);
-    } catch(ClassCastException e) {
+    } catch (ClassCastException e)
+    {
       return null;
     }
   }
@@ -281,6 +280,7 @@ public class PersistenceHandler extends SQLiteOpenHelper implements IPersistence
     annotated.add(User.class);
     annotated.add(StoredMovie.class);
     annotated.add(Rating.class);
+    annotated.add(UrlCache.class);
 
     List<PersistableClass> classes = new ArrayList<PersistableClass>();
     for (Class<?> cls : annotated)
@@ -330,5 +330,36 @@ public class PersistenceHandler extends SQLiteOpenHelper implements IPersistence
     return fields;
   }
 
-  private static final int DATABASE_VERSION = 6;
+  private void createTableForClass(SQLiteDatabase db, PersistableClass cls)
+  {
+    StringBuilder sqlBuilder = new StringBuilder();
+
+    sqlBuilder.append("CREATE TABLE ");
+    sqlBuilder.append(cls.Name);
+    sqlBuilder.append(" ( ");
+
+    for (int i = 0; i < cls.Fields.size(); i++)
+    {
+      PersistableField field = cls.Fields.get(i);
+      sqlBuilder.append(field.Name);
+      sqlBuilder.append(" ");
+      sqlBuilder.append(SqlTools.getSqlType(field.Type));
+      if (field.IsPrimary)
+      {
+        sqlBuilder.append(" PRIMARY KEY AUTOINCREMENT");
+      }
+      if (i + 1 < cls.Fields.size())
+      {
+        sqlBuilder.append(", ");
+      }
+    }
+
+    sqlBuilder.append(" );");
+
+    String sqlCommand = sqlBuilder.toString();
+
+    db.execSQL(sqlCommand);
+  }
+
+  private static final int DATABASE_VERSION = 8;
 }

@@ -55,7 +55,7 @@ public class WishMoviesActivity extends ListActivity
     @Override
     protected Movie doInBackground(String... params)
     {
-      Movie result = ApiTools.getMovie(Integer.parseInt(params[0]));
+      Movie result = ApiTools.getMovie(WishMoviesActivity.this, Integer.parseInt(params[0]));
 
       return result;
     }

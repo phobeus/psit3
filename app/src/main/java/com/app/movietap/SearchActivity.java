@@ -127,7 +127,7 @@ public class SearchActivity extends BaseActivity
     @Override
     protected List<Movie> doInBackground(String... params)
     {
-      List<Movie> result = ApiTools.searchMovies(params[0]);
+      List<Movie> result = ApiTools.searchMovies(SearchActivity.this, params[0]);
 
       return result;
     }
@@ -154,7 +154,7 @@ public class SearchActivity extends BaseActivity
     @Override
     protected List<Movie> doInBackground(String... params)
     {
-      List<Movie> result = ApiTools.popularMovies();
+      List<Movie> result = ApiTools.popularMovies(SearchActivity.this);
 
       return result;
     }
@@ -181,7 +181,7 @@ public class SearchActivity extends BaseActivity
     @Override
     protected List<Movie> doInBackground(String... params)
     {
-      List<Movie> result = ApiTools.bestRatedMovies();
+      List<Movie> result = ApiTools.bestRatedMovies(SearchActivity.this);
 
       return result;
     }

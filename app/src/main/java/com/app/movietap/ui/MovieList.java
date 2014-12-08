@@ -12,6 +12,7 @@ import com.app.movietap.R;
 import com.app.movietap.model.cacheable.Movie;
 import com.app.movietap.tools.ActivityTools;
 
+import java.util.Date;
 import java.util.List;
 
 public class MovieList extends ArrayAdapter<Movie>
@@ -35,18 +36,27 @@ public class MovieList extends ArrayAdapter<Movie>
     Movie movie = _movies.get(position);
 
     txtTitle.setText(movie.getTitle());
-    if(movie.getReleaseDate() != null)
+    Date releaseDate = movie.getReleaseDate();
+    if (releaseDate != null)
     {
-      txtDate.setText(ActivityTools.fomateDate(movie.getReleaseDate()));
-    }
-    else if(!movie.getOriginalTitle().equals(movie.getTitle()))
+      txtDate.setVisibility(View.VISIBLE);
+      txtDate.setText("Erschienen am " + ActivityTools.fomateDate(releaseDate));
+    } else
     {
-      txtDesc.setText(movie.getOriginalTitle());
+      txtDate.setVisibility(View.GONE);
     }
-    if(movie.getTagline() != null)
+    if (!movie.getOriginalTitle().equals(movie.getTitle()))
     {
-        txtDesc.setText(movie.getTagline());
+      txtTitle.setText(txtTitle.getText() + " (" + movie.getOriginalTitle() + ")");
     }
+    if (movie.getVoteCount() > 0)
+    {
+      txtDesc.setText("Bewertung: " + movie.getVoteAverage() + " (von " + movie.getVoteCount() + " Benutzern)");
+    } else
+    {
+      txtDesc.setText("Noch keine Bewertung");
+    }
+
     _rowQuery = new AQuery(rowView);
     _rowQuery.id(R.id.img).image("http://image.tmdb.org/t/p/w185" + movie.getPoster());
 

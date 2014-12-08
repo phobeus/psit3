@@ -68,7 +68,7 @@ public class ActivityTools
     }
 
     // return main activity in case of not found activity
-    return createActivity("com.app.movietap.LoginActivity", applicationContext);
+    return createActivity("com.app.movietap.NavigationActivity", applicationContext);
   }
 
   public static String fomateDate(Date d)

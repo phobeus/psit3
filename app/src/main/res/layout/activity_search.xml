@@ -70,7 +70,7 @@
         android:focusable="true"
         android:text="Suche"
         android:layout_margin="5dp"
-        android:background="@drawable/mt_button"/>
+        android:background="@drawable/mt_button_green"/>
 
     <Button
         android:id="@+id/search_buttonRated"

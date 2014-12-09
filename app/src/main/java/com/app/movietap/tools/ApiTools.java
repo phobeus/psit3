@@ -6,6 +6,7 @@ import android.util.Log;
 import com.app.movietap.api.UrlCacheTools;
 import com.app.movietap.model.cacheable.Movie;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.utils.URIBuilder;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,13 +17,30 @@ import java.util.List;
 
 public class ApiTools
 {
-  public static List<Movie> searchMovies(Context context, String query)
+  public static List<Movie> searchMovies(Context context, String query, String adultVideos, String year)
   {
     URIBuilder url = getBaseUriBuilder();
     if(url == null) { return null; }
 
     url.setPath("/3/search/movie");
     url.addParameter("query", query);
+
+    if (StringUtils.isNotEmpty(adultVideos))
+    {
+      url.addParameter("include_adult", Boolean.valueOf(adultVideos).toString());
+    }
+    if (StringUtils.isNotBlank(year))
+    {
+      try
+      {
+        Integer yearInt = Integer.parseInt(year);
+        url.addParameter("year", yearInt + "");
+      }
+      catch (NumberFormatException exception)
+      {
+        // NOP, no valid number given, just ignore this parameter
+      }
+    }
 
     String json = UrlCacheTools.getUrl(context, url);
 

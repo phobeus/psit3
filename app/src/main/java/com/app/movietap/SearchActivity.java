@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -79,8 +80,10 @@ public class SearchActivity extends BaseActivity
 
   public void performSearch()
   {
+    String showAdult = ((Switch)findViewById(R.id.search_switchShowAdult)).isChecked() + "";
+    String year = ((EditText)findViewById(R.id.search_editTextYear)).getText().toString();
     String query = ((EditText) findViewById(R.id.search_searchEditText)).getText().toString();
-    new SearchMovieOperation().execute(query);
+    new SearchMovieOperation().execute(query, showAdult, year);
     hideKeyboard();
   }
 
@@ -130,7 +133,7 @@ public class SearchActivity extends BaseActivity
     @Override
     protected List<Movie> doInBackground(String... params)
     {
-      List<Movie> result = ApiTools.searchMovies(SearchActivity.this, params[0]);
+      List<Movie> result = ApiTools.searchMovies(SearchActivity.this, params[0], params[1], params[2]);
 
       return result;
     }

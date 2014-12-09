@@ -1,7 +1,16 @@
 package com.app.movietap.model.database;
 
+/**
+ * Provides database specific helper methods.
+ */
 public class SqlTools
 {
+  /**
+   * Determines the sqlite database type and returns it.
+   *
+   * @param type the requested type
+   * @return the database type as a string
+   */
   public static String getSqlType(Class<?> type)
   {
     if (Integer.class.isAssignableFrom(type) || int.class.isAssignableFrom(type) || long.class.isAssignableFrom(type) || Long.class.isAssignableFrom(type))
@@ -22,6 +31,13 @@ public class SqlTools
     return null;
   }
 
+  /**
+   * Determines the type and returns the same type as the upper case class.
+   * We ran into some issues extracting fields by reflection, this method fixes this issue.
+   *
+   * @param field the requested field
+   * @return the given type standardized
+   */
   public static Class<?> getType(Class<?> field)
   {
     if (field.isAssignableFrom(int.class) || field.isAssignableFrom(Integer.class))

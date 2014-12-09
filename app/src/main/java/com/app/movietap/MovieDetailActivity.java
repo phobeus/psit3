@@ -21,6 +21,7 @@ import com.app.movietap.tools.PersistenceHandler;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONException;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -179,11 +180,10 @@ public class MovieDetailActivity extends BaseActivity
 
     _trailer = detailedMovie.getYoutubeId();
     Button trailerButton = (Button) findViewById(R.id.movieDetail_buttonTrailer);
-    if(_trailer != null && StringUtils.isNotEmpty(_trailer))
+    if (_trailer != null && StringUtils.isNotEmpty(_trailer))
     {
       trailerButton.setText("YouTube Trailer");
-    }
-    else
+    } else
     {
       Drawable drawableYoutubeGray = getResources().getDrawable(R.drawable.ic_youtube);
       trailerButton.setCompoundDrawablesWithIntrinsicBounds(drawableYoutubeGray, null, null, null);

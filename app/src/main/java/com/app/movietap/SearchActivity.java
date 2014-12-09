@@ -78,37 +78,37 @@ public class SearchActivity extends BaseActivity
     });
   }
 
-  public void performSearch()
+  @Override
+  protected void onNewIntent(Intent intent)
   {
-    String showAdult = ((Switch)findViewById(R.id.search_switchShowAdult)).isChecked() + "";
-    String year = ((EditText)findViewById(R.id.search_editTextYear)).getText().toString();
+    handleIntent(intent);
+  }
+
+  private void performSearch()
+  {
+    String showAdult = ((Switch) findViewById(R.id.search_switchShowAdult)).isChecked() + "";
+    String year = ((EditText) findViewById(R.id.search_editTextYear)).getText().toString();
     String query = ((EditText) findViewById(R.id.search_searchEditText)).getText().toString();
     new SearchMovieOperation().execute(query, showAdult, year);
     hideKeyboard();
   }
 
-  public void hideKeyboard()
+  private void hideKeyboard()
   {
     InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
     inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
   }
 
-  public void performPopular()
+  private void performPopular()
   {
     new PopularMovieOperation().execute();
     hideKeyboard();
   }
 
-  public void performBestRated()
+  private void performBestRated()
   {
     new BestRatedMovieOperation().execute();
     hideKeyboard();
-  }
-
-  @Override
-  protected void onNewIntent(Intent intent)
-  {
-    handleIntent(intent);
   }
 
   private void handleIntent(Intent intent)
@@ -128,6 +128,9 @@ public class SearchActivity extends BaseActivity
     startActivity(intent);
   }
 
+  /**
+   * Private sub-class for async tasks involving loading data from the network.
+   */
   private class SearchMovieOperation extends AsyncTask<String, Void, List<Movie>>
   {
     @Override
@@ -155,6 +158,9 @@ public class SearchActivity extends BaseActivity
     }
   }
 
+  /**
+   * Private sub-class for async tasks involving loading data from the network.
+   */
   private class PopularMovieOperation extends AsyncTask<String, Void, List<Movie>>
   {
     @Override
@@ -182,6 +188,9 @@ public class SearchActivity extends BaseActivity
     }
   }
 
+  /**
+   * Private sub-class for async tasks involving loading data from the network.
+   */
   private class BestRatedMovieOperation extends AsyncTask<String, Void, List<Movie>>
   {
     @Override

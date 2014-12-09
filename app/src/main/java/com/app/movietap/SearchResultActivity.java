@@ -11,6 +11,9 @@ import com.app.movietap.ui.MovieList;
 
 import java.util.ArrayList;
 
+/**
+ * Provides a list of search results that can be clicked
+ */
 public class SearchResultActivity extends BaseActivity
 {
   @Override

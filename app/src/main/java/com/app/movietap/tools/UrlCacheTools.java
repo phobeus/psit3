@@ -1,4 +1,4 @@
-package com.app.movietap.api;
+package com.app.movietap.tools;
 
 import android.content.Context;
 import android.util.Log;
@@ -19,13 +19,31 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Provides methods to get url results in a cached manner
+ * Default cache time is 1 day
+ */
 public class UrlCacheTools
 {
+  /**
+   * Returns the result of a url request.
+   *
+   * @param context the context of the callee
+   * @param uri     the uri to get the url from to send the request to
+   * @return a json string containing the result
+   */
   public static String getUrl(Context context, URIBuilder uri)
   {
     return getUrl(context, uri.toString());
   }
 
+  /**
+   * Returns the result of a url request.
+   *
+   * @param context the context of the callee
+   * @param url     the url to send the request to
+   * @return a json string containing the result
+   */
   public static String getUrl(Context context, String url)
   {
     if (_cache == null)
@@ -34,8 +52,7 @@ public class UrlCacheTools
       try
       {
         _cache = handler.loadListWhere(UrlCache.class, null, null, null, null, null);
-      }
-      catch (Exception e)
+      } catch (Exception e)
       {
         e.printStackTrace();
       }

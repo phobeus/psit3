@@ -15,6 +15,9 @@ import com.app.movietap.tools.ActivityTools;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * ArrayAdapter for movies - shows movies with some basic information and a cached picture
+ */
 public class MovieList extends ArrayAdapter<Movie>
 {
   public MovieList(Activity context, List<Movie> movies)

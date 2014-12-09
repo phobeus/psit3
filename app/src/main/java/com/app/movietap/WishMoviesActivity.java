@@ -21,6 +21,9 @@ import com.app.movietap.ui.MovieList;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Provides a list of movies that the user wishes to own
+ */
 public class WishMoviesActivity extends BaseActivity
 {
   @Override
@@ -53,6 +56,12 @@ public class WishMoviesActivity extends BaseActivity
       List<StoredMovie> movies = handler.loadListWhere(StoredMovie.class, "Status == ?", new String[]{MovieStatus.Wished + ""}, null, null, null);
       _movies = new ArrayList<Movie>(movies.size());
 
+      if (movies.size() == 0)
+      {
+        MovieList adapter = new MovieList(WishMoviesActivity.this, new ArrayList<Movie>());
+        _resultList.setAdapter(adapter);
+      }
+
       for (StoredMovie movie : movies)
       {
         synchronized (this)
@@ -82,6 +91,9 @@ public class WishMoviesActivity extends BaseActivity
     }
   }
 
+  /**
+   * A sub-class that loads movies asynchronously
+   */
   private class GetMovieOperation extends AsyncTask<String, Void, Movie>
   {
     @Override

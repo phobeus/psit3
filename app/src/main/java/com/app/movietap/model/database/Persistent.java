@@ -10,5 +10,6 @@ import java.lang.annotation.Target;
 public @interface Persistent
 {
   public String Name() default "";
+
   public boolean Primary() default false;
 }

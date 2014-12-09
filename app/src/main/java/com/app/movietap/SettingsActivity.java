@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 
-
+/**
+ * Provides a form for the settings of the application
+ */
 public class SettingsActivity extends Activity
 {
   public static final String KEY_PREF_START_SCREEN = "pref_start_screen";

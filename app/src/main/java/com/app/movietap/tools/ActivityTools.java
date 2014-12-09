@@ -5,19 +5,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 
-import com.app.movietap.MovieDetailActivity;
 import com.app.movietap.R;
-import com.app.movietap.model.cacheable.Movie;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
+/**
+ * Provides shared methods used by activities.
+ */
 public class ActivityTools
 {
+  /**
+   * Handler method for the menu actions.
+   *
+   * @param item     the called item
+   * @param activity the activity that called the method
+   * @return true if the request was handled
+   */
   public static boolean HandleOptionsItemSelected(MenuItem item, Activity activity)
   {
     // Handle action bar item clicks here. The action bar will
@@ -35,35 +40,36 @@ public class ActivityTools
       activity.startActivity(intent);
     } else if (id == R.id.action_search_view)
     {
-        Intent intent = createActivity("SearchActivity", activity.getApplicationContext());
-        activity.startActivity(intent);
+      Intent intent = createActivity("SearchActivity", activity.getApplicationContext());
+      activity.startActivity(intent);
     } else if (id == R.id.action_settings)
     {
-        Intent intent = createActivity("SettingsActivity", activity.getApplicationContext());
-        activity.startActivity(intent);
+      Intent intent = createActivity("SettingsActivity", activity.getApplicationContext());
+      activity.startActivity(intent);
     }
 
     return true;
   }
 
   /**
-   * create a new intent and returns it. checks if activity is already
-   * running.
+   * Create a new intent and returns it. Checks if activity is already running.
    *
-   * @param classNameToActivate
-   * class name of activity
-   * @param applicationContext
-   * @return new Intent
+   * @param classNameToActivate the name of the class to try to activate
+   * @param applicationContext  the context of the callee
+   * @return a new intent according to the given data
    */
-  public static Intent createActivity(String classNameToActivate, Context applicationContext) {
-    try {
+  public static Intent createActivity(String classNameToActivate, Context applicationContext)
+  {
+    try
+    {
       Class<?> activityClass = Class.forName("com.app.movietap."
         + classNameToActivate);
       Intent intent = new Intent(applicationContext, activityClass);
       intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
       // startActivity(intent);
       return intent;
-    } catch (ClassNotFoundException ex) {
+    } catch (ClassNotFoundException ex)
+    {
       Log.e("movietap", "Menu error", ex);
     }
 
@@ -71,10 +77,15 @@ public class ActivityTools
     return createActivity("com.app.movietap.NavigationActivity", applicationContext);
   }
 
-  public static String fomateDate(Date d)
-    {
-        SimpleDateFormat dt = new SimpleDateFormat("dd.M.yyyy");
-        return dt.format(d);
-    }
-
+  /**
+   * Gets a date as a formatted string.
+   *
+   * @param date the date
+   * @return the formatted date
+   */
+  public static String fomateDate(Date date)
+  {
+    SimpleDateFormat dt = new SimpleDateFormat("dd.M.yyyy");
+    return dt.format(date);
+  }
 }

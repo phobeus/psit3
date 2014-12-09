@@ -13,43 +13,107 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Provides functions to handle strings and json strings.
+ */
 public class JsonTools
 {
-    public static final List<Movie> getMovies(String json)
+  /**
+   * Returns a list of movies from the given json string.
+   * If an error occurs, returns an empty list.
+   *
+   * @param json string to parse
+   * @return a list of movies from the given json string
+   */
+  public static final List<Movie> getMovies(String json)
+  {
+    ArrayList<Movie> result = new ArrayList<Movie>();
+
+    if (!StringUtils.isBlank(json))
     {
-        ArrayList<Movie> result = new ArrayList<Movie>();
+      try
+      {
+        JSONObject reader = new JSONObject(json);
+        JSONArray results = reader.getJSONArray("results");
 
-        if(!StringUtils.isBlank(json))
+        for (int i = 0; i < results.length(); i++)
         {
-            try
-            {
-                JSONObject reader = new JSONObject(json);
-                JSONArray results = reader.getJSONArray("results");
-
-                for(int i = 0; i< results.length();i++)
-                {
-                    try
-                    {
-                        JSONObject movieObject = results.getJSONObject(i);
-                        Movie movie = getMovie(movieObject);
-                        result.add(movie);
-                    }
-                    catch (JSONException e)
-                    {
-                        // TODO: Logging mechanism, for now just skip an element that can't be parsed
-                        return result;
-                    }
-                }
-            } catch (JSONException e)
-            {
-                // TODO: Logging mechanism
-                return result;
-            }
+          try
+          {
+            JSONObject movieObject = results.getJSONObject(i);
+            Movie movie = getMovie(movieObject);
+            result.add(movie);
+          } catch (JSONException e)
+          {
+            // TODO: Logging mechanism, for now just skip an element that can't be parsed
+            return result;
+          }
         }
-
+      } catch (JSONException e)
+      {
+        // TODO: Logging mechanism
         return result;
+      }
     }
 
+    return result;
+  }
+
+  /**
+   * Returns a movie from a given json string
+   *
+   * @param json the json string containing the movie
+   * @return the movie from the given json string or null if it is not found
+   */
+  public static final Movie getMovie(String json)
+  {
+
+    if (!StringUtils.isBlank(json))
+    {
+      try
+      {
+        // TODO: Add description etc. to the movie here before returning it.
+        return getMovie(new JSONObject(json));
+
+      } catch (JSONException e)
+      {
+        // TODO: Logging mechanism
+        return null;
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * Returns the url for a trailer of a json string containing a movie
+   *
+   * @param json the json string to parse
+   * @return the url for the given json object or null if no url is found
+   */
+  public static final String getTrailer(String json)
+  {
+    if (!StringUtils.isBlank(json))
+    {
+      try
+      {
+        return getTrailerUrl(new JSONObject(json));
+
+      } catch (JSONException e)
+      {
+        return null;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Returns a movie from a json object.
+   *
+   * @param movieObject the json object containing the movie
+   * @return the movie object
+   * @throws JSONException when a json parse error occurs
+   */
   private static Movie getMovie(JSONObject movieObject) throws JSONException
   {
     boolean adult = movieObject.getBoolean("adult");
@@ -74,27 +138,29 @@ public class JsonTools
     Movie returnMovie = new Movie(id, adult, backdrop, title, originalTitle, releaseDate, poster, popularity, voteAverage, voteCount);
 
     // TODO: Add additional parameters here, be careful, not every json string has those!
-    if(movieObject.has("tagline"))
+    if (movieObject.has("tagline"))
     {
       String tagline = movieObject.getString("tagline");
-      if(tagline != null && !tagline.equals("null"))
+      if (tagline != null && !tagline.equals("null"))
       {
         returnMovie.setTagline(tagline);
       }
     }
-    if(movieObject.has("overview"))
+    if (movieObject.has("overview"))
     {
       String overview = movieObject.getString("overview");
-      if(overview != null && !overview.equals("null"))
+      if (overview != null && !overview.equals("null"))
       {
         returnMovie.setOverview(overview);
       }
     }
-    if(movieObject.has("genres")) {
+    if (movieObject.has("genres"))
+    {
       JSONArray genreArray = movieObject.getJSONArray("genres");
       returnMovie.setGenres(genreArray);
     }
-    if(movieObject.has("production_companies")) {
+    if (movieObject.has("production_companies"))
+    {
       JSONArray productionArray = movieObject.getJSONArray("production_companies");
       returnMovie.setProductionCompanies(productionArray);
     }
@@ -102,7 +168,14 @@ public class JsonTools
     return returnMovie;
   }
 
-  private static String getTrailer(JSONObject movieObject) throws JSONException
+  /**
+   * Returns the url for a trailer of a json object
+   *
+   * @param movieObject the json object to parse
+   * @return the url for the given json object
+   * @throws JSONException when a parsing exception occurs within the json object
+   */
+  private static String getTrailerUrl(JSONObject movieObject) throws JSONException
   {
     JSONArray trailers = movieObject.getJSONArray("results");
     String videoId = null;
@@ -110,18 +183,22 @@ public class JsonTools
     int VideoSize = 0;
     int tempVideoSize = 0;
 
-    for(int i = 0; i < trailers.length(); i++){
-      try {
-        if (trailers.getJSONObject(i).getString("site").equals("YouTube")){
+    for (int i = 0; i < trailers.length(); i++)
+    {
+      try
+      {
+        if (trailers.getJSONObject(i).getString("site").equals("YouTube"))
+        {
           tempVideoId = trailers.getJSONObject(i).getString("key");
           tempVideoSize = trailers.getJSONObject(i).getInt("size");
         }
-      } catch (JSONException e) {
+      } catch (JSONException e)
+      {
         e.printStackTrace();
       }
 
-      //make the
-      if(tempVideoSize >= VideoSize) {
+      if (tempVideoSize >= VideoSize)
+      {
         videoId = tempVideoId;
       }
     }
@@ -129,43 +206,5 @@ public class JsonTools
     return videoId;
   }
 
-  public static final Movie getMovie(String json)
-  {
-
-    if(!StringUtils.isBlank(json))
-    {
-      try
-      {
-
-        // TODO: Add description etc. to the movie here before returning it.
-        // This is an example string:
-        // {"adult":false,"backdrop_path":"/pA6FQxybVUjNlbYUAJJupLTfUsN.jpg","belongs_to_collection":null,"budget":40000000,"genres":[{"id":35,"name":"Comedy"}],"homepage":"","id":232672,"imdb_id":"tt1086772","original_title":"Blended","overview":"After a bad blind date, a man and woman find themselves stuck together at a resort for families, where their attractions grows as their respective kids benefit from the burgeoning relationship.","popularity":34.08180121625,"poster_path":"/shXBDFnGTmG3DOUib7vBt21tMFk.jpg","production_companies":[{"name":"Warner Brothers","id":6577},{"name":"Warner Bros.","id":6194},{"name":"Happy Madison","id":878},{"name":"Gulfstream Pictures","id":20788}],"production_countries":[{"iso_3166_1":"US","name":"United States of America"}],"release_date":"2014-05-23","revenue":123494610,"runtime":117,"spoken_languages":[{"iso_639_1":"en","name":"English"}],"status":"Released","tagline":"Single Dad, No Clue. Single Mum, Flying Solo.","title":"Blended","vote_average":6.9,"vote_count":178}
-        return getMovie(new JSONObject(json));
-
-      } catch (JSONException e)
-      {
-        // TODO: Logging mechanism
-        return null;
-      }
-    }
-
-    return null;
-  }
-  public static final String getTrailer(String json)
-  {
-    if(!StringUtils.isBlank(json))
-    {
-      try
-      {
-        return getTrailer(new JSONObject(json));
-
-      } catch (JSONException e)
-      {
-        return null;
-      }
-    }
-    return null;
-  }
-
-  private static SimpleDateFormat _dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+  private static final SimpleDateFormat _dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 }

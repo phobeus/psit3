@@ -10,21 +10,30 @@ import com.app.movietap.model.Rating;
 import com.app.movietap.model.StoredMovie;
 import com.app.movietap.model.UrlCache;
 import com.app.movietap.model.User;
-import com.app.movietap.model.database.*;
+import com.app.movietap.model.database.PersistableClass;
+import com.app.movietap.model.database.PersistableField;
+import com.app.movietap.model.database.Persistent;
+import com.app.movietap.model.database.SqlTools;
 
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.ParameterizedType;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Handles all persistence calls with the SQLite database.
+ */
 public class PersistenceHandler extends SQLiteOpenHelper implements IPersistenceHandler
 {
+  /**
+   * Creates a new instance of the PersistanceHandler on the given context
+   *
+   * @param context the context on where this instance is created
+   */
   public PersistenceHandler(Context context)
   {
     super(context, "MovieTap", null, DATABASE_VERSION);
@@ -118,7 +127,119 @@ public class PersistenceHandler extends SQLiteOpenHelper implements IPersistence
   }
 
   @Override
-  public <T> T load(Class<T> cls, Cursor cursor)
+  public <T> List<T> loadListWhere(Class<T> cls, String where, String[] values, String groupBy, String orderBy, String limit)
+  {
+    SQLiteDatabase db = getWritableDatabase();
+    ArrayList<String> fields = new ArrayList<String>();
+    for (PersistableField f : getPersistableFields(cls))
+    {
+      fields.add(f.Name);
+    }
+
+    ArrayList<T> result = new ArrayList<T>();
+
+    Cursor cursor = db.query(cls.getSimpleName(), Arrays.copyOf(fields.toArray(), fields.size(), String[].class), where, values, groupBy, null, orderBy, limit);
+    if (cursor != null && cursor.getCount() >= 1)
+    {
+      cursor.moveToFirst();
+
+      do
+      {
+        result.add(load(cls, cursor));
+      } while (cursor.moveToNext());
+    }
+    db.close();
+
+    return result;
+  }
+
+  @Override
+  public <T> T loadWhere(Class<T> cls, String where, String[] values)
+  {
+    Object item = loadWhere(cls, where, values, null, null, null);
+
+    return convertInstanceOfObject(item, cls);
+  }
+
+  private static <T> T convertInstanceOfObject(Object o, Class<T> clazz)
+  {
+    try
+    {
+      return clazz.cast(o);
+    } catch (ClassCastException e)
+    {
+      return null;
+    }
+  }
+
+  public <T> T loadWhere(Class<T> cls, String where, String[] values, String groupBy, String orderBy, String limit)
+  {
+    SQLiteDatabase db = getWritableDatabase();
+    ArrayList<String> fields = new ArrayList<String>();
+    for (PersistableField f : getPersistableFields(cls))
+    {
+      fields.add(f.Name);
+    }
+
+    Cursor cursor = db.query(cls.getSimpleName(), Arrays.copyOf(fields.toArray(), fields.size(), String[].class), where, values, groupBy, null, orderBy, limit);
+    if (cursor != null && cursor.getCount() == 1)
+    {
+      cursor.moveToFirst();
+      Object loadedObject = load(cls, cursor);
+      db.close();
+
+      return convertInstanceOfObject(loadedObject, cls);
+    }
+    db.close();
+
+    return null;
+  }
+
+  @Override
+  public void deleteWhere(Class<?> cls, String where, String[] values)
+  {
+    SQLiteDatabase db = getWritableDatabase();
+    db.delete(cls.getSimpleName(), where, values);
+    db.close();
+  }
+
+  @Override
+  public User getOrCreateLocalUser(String uid)
+  {
+    SQLiteDatabase db = this.getWritableDatabase();
+    ArrayList<String> fields = new ArrayList<String>();
+    for (PersistableField f : getPersistableFields(User.class))
+    {
+      fields.add(f.Name);
+    }
+
+    Cursor cursor = db.query("User", Arrays.copyOf(fields.toArray(), fields.size(), String[].class), "UID = ?", new String[]{uid}, null, null, null);
+    User user;
+    if (cursor != null && cursor.getCount() == 1)
+    {
+      cursor.moveToFirst();
+      Object result = load(User.class, cursor);
+      user = (User) result;
+    } else
+    {
+      user = new User();
+      user.UID = uid;
+      save(user);
+    }
+    db.close();
+
+    return user;
+  }
+
+  /**
+   * Generic method to load persistent objects
+   *
+   * @param cls    the class to load
+   * @param cursor the cursor with the statement
+   * @param <T>    the type of the object
+   * @return the loaded object
+   */
+  private <T> T load(Class<T> cls, Cursor cursor)
   {
     Constructor[] ctors = cls.getDeclaredConstructors();
     Constructor ctor = null;
@@ -172,110 +293,11 @@ public class PersistenceHandler extends SQLiteOpenHelper implements IPersistence
     return convertInstanceOfObject(result, cls);
   }
 
-  @Override
-  public <T> List<T> loadListWhere(Class<T> cls, String where, String[] values, String groupBy, String orderBy, String limit)
-  {
-    SQLiteDatabase db = getWritableDatabase();
-    ArrayList<String> fields = new ArrayList<String>();
-    for (PersistableField f : getPersistableFields(cls))
-    {
-      fields.add(f.Name);
-    }
-
-    ArrayList<T> result = new ArrayList<T>();
-
-    Cursor cursor = db.query(cls.getSimpleName(), Arrays.copyOf(fields.toArray(), fields.size(), String[].class), where, values, groupBy, null, orderBy, limit);
-    if (cursor != null && cursor.getCount() >= 1)
-    {
-      cursor.moveToFirst();
-
-      do
-      {
-        result.add(load(cls, cursor));
-      } while (cursor.moveToNext());
-      db.close();
-    }
-
-    return result;
-  }
-
-  @Override
-  public <T> T loadWhere(Class<T> cls, String where, String[] values)
-  {
-    Object item = loadWhere(cls, where, values, null, null, null);
-
-    return convertInstanceOfObject(item, cls);
-  }
-
-  private static <T> T convertInstanceOfObject(Object o, Class<T> clazz)
-  {
-    try
-    {
-      return clazz.cast(o);
-    } catch (ClassCastException e)
-    {
-      return null;
-    }
-  }
-
-  public <T> T loadWhere(Class<T> cls, String where, String[] values, String groupBy, String orderBy, String limit)
-  {
-    SQLiteDatabase db = getWritableDatabase();
-    ArrayList<String> fields = new ArrayList<String>();
-    for (PersistableField f : getPersistableFields(cls))
-    {
-      fields.add(f.Name);
-    }
-
-    Cursor cursor = db.query(cls.getSimpleName(), Arrays.copyOf(fields.toArray(), fields.size(), String[].class), where, values, groupBy, null, orderBy, limit);
-    if (cursor != null && cursor.getCount() == 1)
-    {
-      cursor.moveToFirst();
-      Object loadedObject = load(cls, cursor);
-      db.close();
-
-      return convertInstanceOfObject(loadedObject, cls);
-    }
-
-    return null;
-  }
-
-  @Override
-  public void deleteWhere(Class<?> cls, String where, String[] values)
-  {
-    SQLiteDatabase db = getWritableDatabase();
-    db.delete(cls.getSimpleName(), where, values);
-    db.close();
-  }
-
-  @Override
-  public User getOrCreateLocalUser(String uid)
-  {
-    SQLiteDatabase db = this.getWritableDatabase();
-    ArrayList<String> fields = new ArrayList<String>();
-    for (PersistableField f : getPersistableFields(User.class))
-    {
-      fields.add(f.Name);
-    }
-
-    Cursor cursor = db.query("User", Arrays.copyOf(fields.toArray(), fields.size(), String[].class), "UID = ?", new String[]{uid}, null, null, null);
-    User user;
-    if (cursor != null && cursor.getCount() == 1)
-    {
-      cursor.moveToFirst();
-      Object result = load(User.class, cursor);
-      user = (User) result;
-    } else
-    {
-      user = new User();
-      user.UID = uid;
-      save(user);
-    }
-    db.close();
-
-    return user;
-  }
-
+  /**
+   * Returns a list of 'PersistableClass' objects that are gathered by reflection
+   *
+   * @return the list of persistable classes with their persistable properties
+   */
   private List<PersistableClass> getPersistableClasses()
   {
     ArrayList<Class<?>> annotated = new ArrayList<Class<?>>();
@@ -309,6 +331,12 @@ public class PersistenceHandler extends SQLiteOpenHelper implements IPersistence
     return classes;
   }
 
+  /**
+   * Returns a list of 'PersistableClass' objects that are gathered by reflection
+   *
+   * @param cls the class on which the persistable properties should be returned
+   * @return the list of persistable properties from the given class
+   */
   private List<PersistableField> getPersistableFields(Class<?> cls)
   {
     List<PersistableField> fields = new ArrayList<PersistableField>();
@@ -333,6 +361,12 @@ public class PersistenceHandler extends SQLiteOpenHelper implements IPersistence
     return fields;
   }
 
+  /**
+   * Creates a new table for the given persistable class in the given database
+   *
+   * @param db  the database to create the table in
+   * @param cls the class to create
+   */
   private void createTableForClass(SQLiteDatabase db, PersistableClass cls)
   {
     StringBuilder sqlBuilder = new StringBuilder();

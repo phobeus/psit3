@@ -3,6 +3,9 @@ package com.app.movietap;
 import android.app.Application;
 import com.parse.Parse;
 
+/**
+ * Main class, initializes the parse library.
+ */
 public class App extends Application {
 
     @Override public void onCreate() {

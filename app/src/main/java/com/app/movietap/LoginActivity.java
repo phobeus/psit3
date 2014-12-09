@@ -22,8 +22,10 @@ import com.parse.ParseUser;
 
 import org.apache.commons.lang3.StringUtils;
 
-// Should not extend BaseActifity, as the
-// Navigation would be visible then
+/**
+ * Should not extend BaseActifity, as the Navigation would then be
+ * visible. Provides login features.
+ */
 public class LoginActivity extends Activity
 {
   protected EditText nickNameText;
@@ -46,7 +48,7 @@ public class LoginActivity extends Activity
       if (!sharedPref.getBoolean(SettingsActivity.KEY_USER_USE_LOGIN, false))
       {
         goToHomeScreen();
-      } else if(!StringUtils.isBlank(username) && !StringUtils.isBlank(password))
+      } else if (!StringUtils.isBlank(username) && !StringUtils.isBlank(password))
       {
         doLogin(username, password);
       }
@@ -101,7 +103,7 @@ public class LoginActivity extends Activity
     });
   }
 
-  public void doLogin(String username, String password)
+  private void doLogin(String username, String password)
   {
     //Login the user via parse.com
     ParseUser.logInInBackground(username, password, new LogInCallback()
@@ -121,7 +123,7 @@ public class LoginActivity extends Activity
     });
   }
 
-  public void goToHomeScreen()
+  private void goToHomeScreen()
   {
     SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
     String setting = sharedPref.getString(SettingsActivity.KEY_PREF_START_SCREEN, "SearchActivity");
@@ -130,27 +132,12 @@ public class LoginActivity extends Activity
     startActivity(intent);
   }
 
-  public void getOrCreateLocalUser()
+  private void getOrCreateLocalUser()
   {
     String uid = Settings.Secure.getString(this.getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
     IPersistenceHandler handler = new PersistenceHandler(this);
     User user = handler.getOrCreateLocalUser(uid);
-  }
 
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item)
-  {
-    // Handle action bar item clicks here. The action bar will
-    // automatically handle clicks on the Home/Up button, so long
-    // as you specify a parent activity in AndroidManifest.xml.
-    int id = item.getItemId();
-
-    //noinspection SimplifiableIfStatement
-    if (id == R.id.action_settings)
-    {
-      return true;
-    }
-
-    return super.onOptionsItemSelected(item);
+    // TODO: set user in a global instance somewhere to store with other objects
   }
 }

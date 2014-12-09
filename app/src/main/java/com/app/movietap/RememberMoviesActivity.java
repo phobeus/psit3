@@ -64,6 +64,24 @@ public class RememberMoviesActivity extends BaseActivity
     }
   }
 
+  private void addToList(Movie result)
+  {
+    _movies.add(result);
+    synchronized (this)
+    {
+      _moviesAdded--;
+    }
+
+    if (_moviesAdded == 0)
+    {
+      synchronized (this)
+      {
+        MovieList adapter = new MovieList(RememberMoviesActivity.this, _movies);
+        _resultList.setAdapter(adapter);
+      }
+    }
+  }
+
   private class GetMovieOperation extends AsyncTask<String, Void, Movie>
   {
     @Override
@@ -89,39 +107,6 @@ public class RememberMoviesActivity extends BaseActivity
     protected void onProgressUpdate(Void... values)
     {
     }
-  }
-
-  private void addToList(Movie result)
-  {
-    _movies.add(result);
-    synchronized (this)
-    {
-      _moviesAdded--;
-    }
-
-    if (_moviesAdded == 0)
-    {
-      synchronized (this)
-      {
-        MovieList adapter = new MovieList(RememberMoviesActivity.this, _movies);
-        _resultList.setAdapter(adapter);
-      }
-    }
-  }
-
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu)
-  {
-    getMenuInflater().inflate(R.menu.menu_navigation, menu);
-    return true;
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item)
-  {
-    super.onOptionsItemSelected(item);
-
-    return ActivityTools.HandleOptionsItemSelected(item, this);
   }
 
   private int _moviesAdded;

@@ -23,35 +23,18 @@ import org.json.JSONException;
 
 import java.util.Date;
 
-
+/**
+ * Provides information about movie details and passes it to the UI.
+ */
 public class MovieDetailActivity extends BaseActivity
 {
-  private Movie _movie;
-  private AQuery _aQuery;
-  private StoredMovie _storedMovie;
-
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_movie_detail);
 
-    //set drawable icons
-    final Drawable drawableRemember = getResources().getDrawable(R.drawable.ic_library);
-    final Drawable drawableWish = getResources().getDrawable(R.drawable.ic_gift);
-    final Drawable drawableRememberAdded = getResources().getDrawable(R.drawable.ic_library_added);
-    final Drawable drawableWishAdded = getResources().getDrawable(R.drawable.ic_gift_added);
-
-    //get information from last activity
-    _movie = (Movie) getIntent().getExtras().getParcelable("movie");
-
-    //set stuff
-    TextView title = (TextView) findViewById(R.id.movieDetail_textViewTitle);
-    title.setText(_movie.getTitle());
-
-    //save image from the movie locally and display it
-    _aQuery = new AQuery(this);
-    _aQuery.id(R.id.movieDetail_imageViewPoster).image("http://image.tmdb.org/t/p/w500" + _movie.getPoster()); /*sizes are 500 or 780*/
+    _movie = getIntent().getExtras().getParcelable("movie");
 
     //check if movie exists in Wishlist
     IPersistenceHandler handler = new PersistenceHandler(this);
@@ -122,6 +105,13 @@ public class MovieDetailActivity extends BaseActivity
     });
 
 
+    TextView title = (TextView) findViewById(R.id.movieDetail_textViewTitle);
+    title.setText(_movie.getTitle());
+
+    //save image from the movie locally and display it
+    _aQuery = new AQuery(this);
+    _aQuery.id(R.id.movieDetail_imageViewPoster).image("http://image.tmdb.org/t/p/w500" + _movie.getPoster()); /*sizes are 500 or 780*/
+
     //moreinfo of the same movie
     Movie detailedMovie = ApiTools.getMovie(this, _movie.getId());
 
@@ -165,21 +155,38 @@ public class MovieDetailActivity extends BaseActivity
     //handle click on Trailer Button
     Button trailerButton = (Button) findViewById(R.id.movieDetail_buttonTrailer);
     final String trailer = detailedMovie.getYoutubeId();
-    trailerButton.setText((trailer != null && StringUtils.isNotEmpty(trailer)) ? "YouTube Trailer" : "Kein Trailer vorhanden");
+
+    if(trailer != null && StringUtils.isNotEmpty(trailer))
+    {
+      trailerButton.setText("YouTube Trailer");
+    }
+    else
+    {
+      Drawable drawableYoutubeGray = getResources().getDrawable(R.drawable.ic_youtube);
+      trailerButton.setCompoundDrawablesWithIntrinsicBounds(drawableYoutubeGray, null, null, null);
+      trailerButton.setText("Kein Trailer vorhanden");
+    }
 
     trailerButton.setOnClickListener(new View.OnClickListener()
     {
       @Override
       public void onClick(View view)
       {
-        //Intent takeUserRegistration = new Intent(LoginActivity.this, RegisterActivity.class);
-        //startActivity(takeUserRegistration);
-        if(trailer != null && StringUtils.isNotEmpty(trailer))
+        if (trailer != null && StringUtils.isNotEmpty(trailer))
         {
           startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=" + trailer)));
         }
       }
     });
-
   }
+
+
+  //set drawable icons
+  private final Drawable drawableRemember = getResources().getDrawable(R.drawable.ic_library);
+  private final Drawable drawableWish = getResources().getDrawable(R.drawable.ic_gift);
+  private final Drawable drawableRememberAdded = getResources().getDrawable(R.drawable.ic_library_added);
+  private final Drawable drawableWishAdded = getResources().getDrawable(R.drawable.ic_gift_added);
+  private Movie _movie;
+  private AQuery _aQuery;
+  private StoredMovie _storedMovie;
 }

@@ -19,7 +19,10 @@ import com.app.movietap.tools.ApiTools;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Provides search logic for different types of searches and calls the
+ * according activities.
+ */
 public class SearchActivity extends BaseActivity
 {
   @Override

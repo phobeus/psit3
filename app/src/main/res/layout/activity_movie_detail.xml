@@ -165,7 +165,7 @@
         android:text="Trailer"
         android:id="@+id/movieDetail_buttonTrailer"
         android:layout_below="@+id/movieDetail_imageViewPoster"
-        android:drawableLeft="@drawable/ic_youtube"
+        android:drawableLeft="@drawable/ic_youtube_color"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="5dp"
         android:layout_alignParentLeft="true"

@@ -34,6 +34,12 @@ public class MovieDetailActivity extends BaseActivity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_movie_detail);
 
+    //set drawable icons
+    final Drawable drawableRemember = getResources().getDrawable(R.drawable.ic_library);
+    final Drawable drawableWish = getResources().getDrawable(R.drawable.ic_gift);
+    final Drawable drawableRememberAdded = getResources().getDrawable(R.drawable.ic_library_added);
+    final Drawable drawableWishAdded = getResources().getDrawable(R.drawable.ic_gift_added);
+
     _movie = getIntent().getExtras().getParcelable("movie");
 
     //check if movie exists in Wishlist
@@ -104,7 +110,24 @@ public class MovieDetailActivity extends BaseActivity
       }
     });
 
+    Button trailerButton = (Button) findViewById(R.id.movieDetail_buttonTrailer);
+    trailerButton.setOnClickListener(new View.OnClickListener()
+    {
+      @Override
+      public void onClick(View view)
+      {
+        if (_trailer != null && StringUtils.isNotEmpty(_trailer))
+        {
+          startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=" + _trailer)));
+        }
+      }
+    });
 
+    setUIElements();
+  }
+
+  private void setUIElements()
+  {
     TextView title = (TextView) findViewById(R.id.movieDetail_textViewTitle);
     title.setText(_movie.getTitle());
 
@@ -153,10 +176,10 @@ public class MovieDetailActivity extends BaseActivity
     }
 
     //handle click on Trailer Button
-    Button trailerButton = (Button) findViewById(R.id.movieDetail_buttonTrailer);
-    final String trailer = detailedMovie.getYoutubeId();
 
-    if(trailer != null && StringUtils.isNotEmpty(trailer))
+    _trailer = detailedMovie.getYoutubeId();
+    Button trailerButton = (Button) findViewById(R.id.movieDetail_buttonTrailer);
+    if(_trailer != null && StringUtils.isNotEmpty(_trailer))
     {
       trailerButton.setText("YouTube Trailer");
     }
@@ -166,26 +189,9 @@ public class MovieDetailActivity extends BaseActivity
       trailerButton.setCompoundDrawablesWithIntrinsicBounds(drawableYoutubeGray, null, null, null);
       trailerButton.setText("Kein Trailer vorhanden");
     }
-
-    trailerButton.setOnClickListener(new View.OnClickListener()
-    {
-      @Override
-      public void onClick(View view)
-      {
-        if (trailer != null && StringUtils.isNotEmpty(trailer))
-        {
-          startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=" + trailer)));
-        }
-      }
-    });
   }
 
-
-  //set drawable icons
-  private final Drawable drawableRemember = getResources().getDrawable(R.drawable.ic_library);
-  private final Drawable drawableWish = getResources().getDrawable(R.drawable.ic_gift);
-  private final Drawable drawableRememberAdded = getResources().getDrawable(R.drawable.ic_library_added);
-  private final Drawable drawableWishAdded = getResources().getDrawable(R.drawable.ic_gift_added);
+  private String _trailer;
   private Movie _movie;
   private AQuery _aQuery;
   private StoredMovie _storedMovie;
